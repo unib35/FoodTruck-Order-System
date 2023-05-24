@@ -37,13 +37,27 @@ public class MenuController {
         return result;
     }
 
+
     public ImageIcon getImage(String name){
         ImageIcon result = menuService.getImage(name);
         return result;
     }
 
+    public int getTotalPrice(ArrayList<MenuDto> cartList){
+        return menuService.getTotalPrice(cartList);
+    }
 
+    public ArrayList<MenuDto> getMenuListByCategory(String category){
+        ArrayList<MenuDto> result = menuService.getMenuListByCategory(category);
+        return result;
+    }
 
+    public boolean deleteMenu(String name){
+        boolean result = menuService.deleteMenu(name);
+        if(result) return true;
+        else return false;
+
+    }
 
 
 

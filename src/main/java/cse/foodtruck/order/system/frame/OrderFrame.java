@@ -279,7 +279,7 @@ public class OrderFrame extends javax.swing.JFrame {
             int result = JOptionPane.showConfirmDialog(null, "메뉴를 변경할 수 없습니다. 결제하시겠습니까?", "결제", JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION){
                 dispose();
-                new PayFrame(cartList);
+                new PayFrame(cartList, cartListTable);
             }
             else if(result == JOptionPane.NO_OPTION){
                 return;

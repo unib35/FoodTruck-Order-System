@@ -1,8 +1,14 @@
 package cse.foodtruck.order.system.frame;
 
+import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
+import cse.foodtruck.order.system.pattern.strategy.CardStrategy;
+import cse.foodtruck.order.system.pattern.strategy.CashStrategy;
+import cse.foodtruck.order.system.pattern.strategy.PaymentStrategy;
 
+import javax.swing.*;
 import java.util.ArrayList;
+
 
 /**
  *
@@ -10,25 +16,23 @@ import java.util.ArrayList;
  */
 public class PayFrame extends javax.swing.JFrame {
 
-    public PayFrame(ArrayList<MenuDto> cartList) {
-        initComponents(cartList);
+    MenuController menuController = MenuController.getInstance();
+    private PaymentStrategy paymentStrategy = null;
+    int totalPrice = 0;
+
+    public PayFrame(ArrayList<MenuDto> cartList, javax.swing.JTable cartTable) {
+        initComponents(cartList, cartTable);
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents(ArrayList<MenuDto> cartList) {
 
-        jOptionPane1 = new javax.swing.JOptionPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jFrame1 = new javax.swing.JFrame();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
-        jSplitPane2 = new javax.swing.JSplitPane();
-        jTextField1 = new javax.swing.JTextField();
+    @SuppressWarnings("unchecked")
+
+    private void initComponents(ArrayList<MenuDto> cartList, javax.swing.JTable cartTable){
+
         titleLabel = new javax.swing.JLabel();
         checkMenuPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        checkMenuTable = new javax.swing.JTable();
+        checkMenuTable = cartTable;
         checkMenuLabel = new javax.swing.JLabel();
         requestPanel = new javax.swing.JPanel();
         requestLabel = new javax.swing.JLabel();
@@ -44,40 +48,8 @@ public class PayFrame extends javax.swing.JFrame {
         payButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        totalPrice = menuController.getTotalPrice(cartList);
 
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-                jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-                jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-                jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-                jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(153, 204, 0));
-        jTextField1.setText("jTextField1");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         titleLabel.setBackground(new java.awt.Color(204, 255, 153));
         titleLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 24)); // NOI18N
@@ -85,17 +57,7 @@ public class PayFrame extends javax.swing.JFrame {
         titleLabel.setText("결제 페이지");
         titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        checkMenuTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String [] {
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
-        ));
+
         jScrollPane2.setViewportView(checkMenuTable);
 
         checkMenuLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
@@ -154,7 +116,7 @@ public class PayFrame extends javax.swing.JFrame {
         PaymentLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         PaymentLabel.setText("결제 수단");
 
-        paymentComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        paymentComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "카드 결제", "현금 결제", "포인트 결제" }));
 
         javax.swing.GroupLayout PaymentPanelLayout = new javax.swing.GroupLayout(PaymentPanel);
         PaymentPanel.setLayout(PaymentPanelLayout);
@@ -183,7 +145,7 @@ public class PayFrame extends javax.swing.JFrame {
 
         AmountOrderPriceLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         AmountOrderPriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        AmountOrderPriceLabel.setText("100,000원");
+        AmountOrderPriceLabel.setText(totalPrice + "원");
 
         javax.swing.GroupLayout amountPricePanelLayout = new javax.swing.GroupLayout(amountPricePanel);
         amountPricePanel.setLayout(amountPricePanelLayout);
@@ -272,14 +234,32 @@ public class PayFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setVisible(true);
     }// </editor-fold>
 
     private void payButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
+        if(paymentComboBox.getSelectedItem().equals("카드 결제")){
+
+            //this.paymentStrategy.setPayment(new CardStrategy());
+            //paymentStrategy.pay(totalPrice);
+            JOptionPane.showMessageDialog(null, "카드 결제가 완료되었습니다.", "결제 완료", JOptionPane.INFORMATION_MESSAGE);
+
+
+        }else if(paymentComboBox.getSelectedItem().equals("현금 결제")){
+            //paymentStrategy = new CashStrategy();
+            JOptionPane.showMessageDialog(null, "현금 결제가 완료되었습니다.", "결제 완료", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+        dispose();
+        new PayCompleteFrame();
     }
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        dispose();
+        new OrderFrame();
     }
 
     // Variables declaration - do not modify
@@ -293,15 +273,8 @@ public class PayFrame extends javax.swing.JFrame {
     private javax.swing.JPanel checkMenuPanel;
     private javax.swing.JTable checkMenuTable;
     private javax.swing.JButton closeButton;
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JFrame jFrame1;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JOptionPane jOptionPane1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton payButton;
     private javax.swing.JComboBox<String> paymentComboBox;
     private javax.swing.JLabel requestLabel;

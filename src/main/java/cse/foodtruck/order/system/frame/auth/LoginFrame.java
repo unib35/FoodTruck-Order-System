@@ -188,7 +188,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     //new SellerFrame(user);
                 }
                 else if(user.getForm().equals("관리자")){
-                    new AdminMainFrame(user);
+                    new AdminMainFrame();
                 }
                 else{
                     new UserMainFrame();

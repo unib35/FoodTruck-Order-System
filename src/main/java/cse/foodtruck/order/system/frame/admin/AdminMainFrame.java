@@ -2,20 +2,22 @@ package cse.foodtruck.order.system.frame.admin;
 
 import cse.foodtruck.order.system.dto.user.UserDto;
 import cse.foodtruck.order.system.frame.auth.LoginFrame;
+import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 /**
  *
  * @author lee
  */
 public class AdminMainFrame extends javax.swing.JFrame {
+    UserDto user = Singleton.getInstance().getUserDto();
 
-    public AdminMainFrame(UserDto user) {
-        initComponents(user);
+    public AdminMainFrame() {
+        initComponents();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents(UserDto user) {
+    private void initComponents() {
 
         titleLabel = new javax.swing.JLabel();
         AdminNameLabel = new javax.swing.JLabel();

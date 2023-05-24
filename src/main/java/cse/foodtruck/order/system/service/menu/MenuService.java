@@ -70,7 +70,33 @@ public class MenuService {
         else return resizeImageIcon;
     }
 
+    public int getTotalPrice(ArrayList<MenuDto> cartList){
+        int totalPrice = 0;
+        for(MenuDto menu : cartList){
+            totalPrice += menu.getPrice();
+        }
+        return totalPrice;
+    }
 
+    public ArrayList<MenuDto> getMenuListByCategory(String category){
+        ArrayList<Menu> menuList = menuRepository.findAll();
+        ArrayList<MenuDto> resultList = new ArrayList<>();
+
+        for(Menu menu : menuList){
+            if(menu.getCategory().equals(category)){
+                resultList.add(MenuDto.createDto(menu));
+            }
+        }
+        if(resultList == null){
+            return null;
+        } else return resultList;
+    }
+
+    public boolean deleteMenu(String name){
+        boolean result = menuRepository.deleteById(name);
+        if(result) return true;
+        else return false;
+    }
 
 
 

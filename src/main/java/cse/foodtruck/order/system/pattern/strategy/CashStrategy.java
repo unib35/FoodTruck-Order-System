@@ -1,5 +1,10 @@
 package cse.foodtruck.order.system.pattern.strategy;
 
+import lombok.NoArgsConstructor;
+
+import javax.swing.*;
+
+@NoArgsConstructor
 public class CashStrategy implements PaymentStrategy{
 
     private String accountBank;
@@ -13,5 +18,6 @@ public class CashStrategy implements PaymentStrategy{
     @Override
     public void pay(int amount) {
         System.out.println("현금 결제");
+        JOptionPane.showMessageDialog(null, "현금 결제");
     }
 }
