@@ -203,6 +203,7 @@ public class SignUpFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             dispose();
+            new LoginFrame();
         }
     }
 

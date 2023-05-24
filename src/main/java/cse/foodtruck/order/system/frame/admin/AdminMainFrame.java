@@ -1,131 +1,107 @@
 package cse.foodtruck.order.system.frame.admin;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import java.awt.Font;
 
-public class AdminMainFrame extends JFrame {
+import cse.foodtruck.order.system.dto.user.UserDto;
+import cse.foodtruck.order.system.frame.auth.LoginFrame;
 
-    private JButton deleteUserButton;
-    private JButton exitButton;
-    private JScrollPane jScrollPane1;
-    private JButton searchButton;
-    private JTextField searchField;
-    private JLabel title;
-    private JList<String> userList;
+/**
+ *
+ * @author lee
+ */
+public class AdminMainFrame extends javax.swing.JFrame {
 
-    public AdminMainFrame() {
-        initComponents();
+    public AdminMainFrame(UserDto user) {
+        initComponents(user);
     }
 
-    private void initComponents() {
-        title = new JLabel();
-        deleteUserButton = new JButton();
-        jScrollPane1 = new JScrollPane();
-        userList = new JList<>();
-        exitButton = new JButton();
-        searchButton = new JButton();
-        searchField = new JTextField();
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+    private void initComponents(UserDto user) {
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        titleLabel = new javax.swing.JLabel();
+        AdminNameLabel = new javax.swing.JLabel();
+        ManagementButton = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
+        NameField = new javax.swing.JTextField();
 
-        title.setFont(new Font("ITF Devanagari Marathi", Font.BOLD, 24));
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setText("회원 관리 모드");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        deleteUserButton.setText("회원 삭제");
-        deleteUserButton.addActionListener(evt -> deleteUserButtonActionPerformed(evt));
+        titleLabel.setBackground(new java.awt.Color(204, 255, 153));
+        titleLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 24)); // NOI18N
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("관리자 모드");
+        titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        userList.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        userList.setFont(new Font("Helvetica Neue", Font.PLAIN, 18));
-        userList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+        AdminNameLabel.setText("관리자 :");
 
-            public int getSize() {
-                return strings.length;
-            }
-
-            public String getElementAt(int i) {
-                return strings[i];
+        ManagementButton.setText("회원 관리");
+        ManagementButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ManagementButtonActionPerformed(evt);
             }
         });
-        userList.setDoubleBuffered(true);
-        jScrollPane1.setViewportView(userList);
 
-        exitButton.setText("종료");
-        exitButton.addActionListener(evt -> exitButtonActionPerformed(evt));
+        logoutButton.setText("로그아웃");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
 
-        searchButton.setText("검색");
-        searchButton.setActionCommand("검색");
-        searchButton.addActionListener(evt -> searchButtonActionPerformed(evt));
-
-        searchField.addActionListener(evt -> searchFieldActionPerformed(evt));
+        NameField.setText(user.getName());
+        NameField.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(25, 25, 25))
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                                        .addComponent(ManagementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(25, 25, 25)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(deleteUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                                                        .addComponent(searchField))
+                                                .addComponent(AdminNameLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                                                        .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addContainerGap(25, Short.MAX_VALUE))
+                                                .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()
+                                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(deleteUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(25, 25, 25))
+                                        .addComponent(AdminNameLabel)
+                                        .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ManagementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
+        setVisible(true);
+    }// </editor-fold>
+
+    private void ManagementButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        new AdminManagementFrame();
     }
 
-    private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        dispose();
+        new LoginFrame();
     }
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here
-    }
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here
-    }
-
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here
-    }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> new AdminMainFrame().setVisible(true));
-    }
+    // Variables declaration - do not modify
+    private javax.swing.JLabel AdminNameLabel;
+    private javax.swing.JButton ManagementButton;
+    private javax.swing.JTextField NameField;
+    private javax.swing.JButton logoutButton;
+    private javax.swing.JLabel titleLabel;
+    // End of variables declaration
 }

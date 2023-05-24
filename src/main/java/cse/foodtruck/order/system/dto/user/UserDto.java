@@ -18,9 +18,9 @@ public class UserDto {
     private String id;
     private String pw;
     private String name;
+    private String email;
     private Timestamp signUpDate;
     private String form;
-    private String email;
 
 
 
@@ -29,8 +29,8 @@ public class UserDto {
                     entity.getId(),
                     entity.getPw(),
                     entity.getName(),
-                    entity.getSignUpDate(),
                     entity.getEmail(),
+                    entity.getSignUpDate(),
                     entity.getForm()
                 );
     }

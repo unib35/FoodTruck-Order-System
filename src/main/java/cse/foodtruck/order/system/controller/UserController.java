@@ -3,8 +3,8 @@ package cse.foodtruck.order.system.controller;
 import cse.foodtruck.order.system.dto.user.*;
 import cse.foodtruck.order.system.service.user.UserService;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class UserController {
@@ -38,12 +38,26 @@ public class UserController {
     }
 
     public UserDto findIdByEmailAndName(String email, String name){
-        UserDto result = userService.findIdByEmailAndName(UserIdFindDto.createDto(email, name));
+        UserDto result = userService.findIdByEmailAndName(UserIdCheckDto.createDto(email, name));
         return result;
     }
 
     public UserDto findPwByEmailAndId(String email, String id){
         UserDto result = userService.findPwByEmailAndId(UserPwFindDto.createDto(email, id));
+        return result;
+    }
+
+    public ArrayList<UserDto> getUserList(){
+        ArrayList<UserDto> result = userService.getUserList();
+        return result;
+    }
+
+    public boolean deleteUser(String id){
+        return userService.deleteUser(id);
+    }
+
+    public ArrayList<UserDto> getUserListBySearch(String searchType, String searchWord){
+        ArrayList<UserDto> result = userService.getUserListBySearch(searchType, searchWord);
         return result;
     }
 

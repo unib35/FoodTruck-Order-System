@@ -5,6 +5,7 @@ import cse.foodtruck.order.system.entity.user.User;
 import cse.foodtruck.order.system.repository.base.CrudRepository;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class UserRepository extends CrudRepository<User, String> {
@@ -34,6 +35,19 @@ public class UserRepository extends CrudRepository<User, String> {
             user = this.resultSetToEntity(rs);
 
             return user;
+        } finally {
+            db.close();
+        }
+    }
+
+    public ArrayList<User> findBySearch(String searchType, String searchWord){
+        String sql = String.format("SELECT * FROM user WHERE %s LIKE \"%%%s%%\";", searchType, searchWord);
+        ArrayList<User> userList = new ArrayList<>();
+        try{
+            this.rs = this.excuteQuery(sql);
+            userList = this.resultSetToEntityList(rs);
+
+            return userList;
         } finally {
             db.close();
         }

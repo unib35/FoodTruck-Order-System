@@ -40,7 +40,7 @@ public class FindIdFrame extends javax.swing.JFrame {
         idFindButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
 
         titleLabel.setBackground(new java.awt.Color(204, 255, 153));
         titleLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 24)); // NOI18N
@@ -181,13 +181,14 @@ public class FindIdFrame extends javax.swing.JFrame {
         else{
             //DB에서 입력한 이메일과 이름이 일치하는 아이디를 찾아옴
             UserDto user = userController.findIdByEmailAndName(inputEmail, inputName);
-            String responseId = user.getId();
+
             //일치하는 아이디가 없는 경우
             if(user == null){
                 JOptionPane.showMessageDialog(null, "일치하는 아이디가 없습니다.", "아이디 찾기", JOptionPane.WARNING_MESSAGE);
             }
             //일치하는 아이디가 있는 경우
             else{
+                String responseId = user.getId();
                 choice = JOptionPane.showOptionDialog(null, user.getName() +"님의 " + "아이디는 " + responseId + " 입니다.", "아이디 찾기", 0, 0, icon , DialogButton, DialogButton[0]);
                 //클립보드 복사를 선택한 경우
                 //클립보드에 아이디 복사
@@ -199,6 +200,7 @@ public class FindIdFrame extends javax.swing.JFrame {
                 }
                 dispose();
             }
+
         }
 
     }
@@ -206,6 +208,7 @@ public class FindIdFrame extends javax.swing.JFrame {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         dispose();
+        new LoginFrame();
     }
 
     // Variables declaration - do not modify

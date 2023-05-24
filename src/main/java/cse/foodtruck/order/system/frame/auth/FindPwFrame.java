@@ -159,6 +159,7 @@ public class FindPwFrame extends javax.swing.JFrame {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         dispose();
+        new LoginFrame();
     }
 
     private void pwFindButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,7 +212,9 @@ public class FindPwFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "클립보드에 복사되었습니다.", "클립보드 복사", JOptionPane.INFORMATION_MESSAGE);
                 }
                 dispose();
+
             }
+            new LoginFrame();
         }
     }
 

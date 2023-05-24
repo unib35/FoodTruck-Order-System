@@ -4,8 +4,8 @@ import cse.foodtruck.order.system.dto.user.*;
 import cse.foodtruck.order.system.entity.user.User;
 import cse.foodtruck.order.system.repository.user.UserRepository;
 
-import java.sql.SQLException;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class UserService {
     private UserRepository userRepository;
@@ -50,11 +50,9 @@ public class UserService {
         else return UserDto.createDto(target);
     }
 
-    public UserDto findIdByEmailAndName(UserIdFindDto dto){
+    public UserDto findIdByEmailAndName(UserIdCheckDto dto){
         User user = User.toEntity(dto);
         User target = userRepository.findIdByEmailAndName(user.getEmail(), user.getName());
-
-
 
         if(target == null){
             return null;
@@ -69,6 +67,31 @@ public class UserService {
             return null;
         }
         else return UserDto.createDto(target);
+    }
+
+    public ArrayList<UserDto> getUserList(){
+        ArrayList<User> userList = userRepository.findAll();
+        ArrayList<UserDto> resultList = new ArrayList<>();
+        for(User user : userList){
+            resultList.add(UserDto.createDto(user));
+        }
+
+        return resultList;
+    }
+
+    public boolean deleteUser(String id){
+        return userRepository.deleteById(id);
+
+    }
+
+    public ArrayList<UserDto> getUserListBySearch(String searchType, String searchWord){
+        ArrayList<User> userList = userRepository.findBySearch(searchType, searchWord);
+        ArrayList<UserDto> resultList = new ArrayList<>();
+        for(User user : userList){
+            resultList.add(UserDto.createDto(user));
+        }
+
+        return resultList;
     }
 
 }

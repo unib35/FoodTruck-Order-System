@@ -64,6 +64,59 @@ public class CrudRepository<T, PK> extends Repository{
         }
     }
 
+    public boolean deleteById(PK pk){ //true 이면 삭제 성공, false 이면 삭제 실패
+        try{
+            conn = db.connect();
+
+            String sql = "DELETE FROM " + tableName + " WHERE " + pkFieldName + " = ?;";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setObject(1, pk);
+
+            pstmt.executeUpdate();
+
+            return true;
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{ db.close(); }
+    }
+
+    public boolean deleteAll(){
+        try{
+            conn = db.connect();
+
+            String sql = "DELETE FROM " + tableName;
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+
+            return true;
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{ db.close(); }
+    }
+
+    public ArrayList<T> findAll(){
+        try{
+            conn = db.connect();
+
+            String sql = "SELECT * FROM " + tableName;
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            return resultSetToEntityList(rs);
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        finally { db.close(); }
+    }
+
     public String insertQuery() {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO ");

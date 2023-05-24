@@ -1,6 +1,6 @@
 package cse.foodtruck.order.system.entity.user;
 
-import cse.foodtruck.order.system.dto.user.UserIdFindDto;
+import cse.foodtruck.order.system.dto.user.UserIdCheckDto;
 import cse.foodtruck.order.system.dto.user.UserLoginDto;
 import cse.foodtruck.order.system.dto.user.UserPwFindDto;
 import lombok.*;
@@ -31,7 +31,7 @@ public class User {
                 .build();
     }
 
-    public static User toEntity(UserIdFindDto dto){
+    public static User toEntity(UserIdCheckDto dto){
         return User.builder()
                 .id(dto.getId())
                 .name(dto.getName())

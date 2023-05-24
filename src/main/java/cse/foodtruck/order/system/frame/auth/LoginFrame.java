@@ -6,12 +6,11 @@ package cse.foodtruck.order.system.frame.auth;
 
 import cse.foodtruck.order.system.controller.UserController;
 import cse.foodtruck.order.system.dto.user.UserDto;
-import cse.foodtruck.order.system.frame.MainFrame;
+import cse.foodtruck.order.system.frame.UserMainFrame;
 import cse.foodtruck.order.system.frame.admin.AdminMainFrame;
-import cse.foodtruck.order.system.frame.seller.SellerFrame;
+import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 import javax.swing.*;
-import java.util.Objects;
 
 /**
  *
@@ -165,8 +164,8 @@ public class LoginFrame extends javax.swing.JFrame {
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
 
-            String inputId = idField.getText();
-            String inputPw = pwField.getText();
+        String inputId = idField.getText();
+        String inputPw = pwField.getText();
 
             //공백만 입력된 경우
             if(inputId.replaceAll(" ","").equals("") || inputPw.replaceAll(" ","").equals("")){
@@ -175,40 +174,47 @@ public class LoginFrame extends javax.swing.JFrame {
             }
 
             UserDto user = userController.login(inputId, inputPw);
+            System.out.println(user);
 
-            if(Objects.isNull(user)){
+            if(user == null){
                 JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 일치하지 않습니다.");
                 return;
+            } else{
+                System.out.println(user.getForm() + " 로그인 성공!");
+                //싱글톤 회원 정보 설정
+                Singleton.getInstance().setUserDto(user);
+                //회원 유형에 맞는 프레임 생성
+                if(user.getForm().equals("판매자")){
+                    //new SellerFrame(user);
+                }
+                else if(user.getForm().equals("관리자")){
+                    new AdminMainFrame(user);
+                }
+                else{
+                    new UserMainFrame();
+                }
+
+                dispose();
             }
 
-            System.out.println(user.getForm() + " 로그인 성공!");
 
-            //회원 유형에 맞는 프레임 생성
-            if(user.getForm().equals("판매자")){
-                new SellerFrame();
-            }
-            else if(user.getForm().equals("관리자")){
-                new AdminMainFrame();
-            }
-            else{
-                new MainFrame();
-            }
-
-            dispose();
     }
 
     private void findIdButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        dispose();
         new FindIdFrame();
     }
 
     private void findPwButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        dispose();
         new FindPwFrame();
     }
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+        dispose();
         new SignUpFrame();
     }
 
