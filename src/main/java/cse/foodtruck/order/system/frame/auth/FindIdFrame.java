@@ -199,6 +199,7 @@ public class FindIdFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "클립보드에 복사되었습니다.", "클립보드 복사", JOptionPane.INFORMATION_MESSAGE);
                 }
                 dispose();
+                new LoginFrame();
             }
 
         }

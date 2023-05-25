@@ -4,12 +4,19 @@ package cse.foodtruck.order.system.frame;
 import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
 import cse.foodtruck.order.system.dto.user.UserDto;
+import cse.foodtruck.order.system.frame.seller.SellerMenuUploadFrame;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static javax.swing.SwingConstants.CENTER;
 
@@ -27,6 +34,7 @@ public class OrderFrame extends javax.swing.JFrame {
     public ArrayList<MenuDto> cartList = new ArrayList<>();
     public String[] foodComboList;
     public String[] beverageComboList;
+    final String PREVEIW_IMAGE_PATH = "./src/main/java/cse/foodtruck/order/system/image/menu/preview.png";
 
     private String columnNames[] = {"메뉴", "가격", "카테고리"};
     private Object rowData[][];
@@ -36,8 +44,22 @@ public class OrderFrame extends javax.swing.JFrame {
         initComponents();
     }
 
-    private void showCartList(ArrayList<MenuDto> cartList) {
 
+    public void setMenuImagePreviewLabel(String path) {
+        try {
+            BufferedImage bi = ImageIO.read(new File(path));
+            ImageIcon icon = new ImageIcon(bi);
+            Image image = icon.getImage();
+            Image resizedImage = image.getScaledInstance(150, 150 , Image.SCALE_SMOOTH);
+            menuImageLabel.setIcon(new ImageIcon(resizedImage));
+        } catch (IOException ex) {
+            Logger.getLogger(SellerMenuUploadFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+
+    private void showCartList(ArrayList<MenuDto> cartList) {
         rowData = new Object[cartList.size()][3];
         for (int i = 0; i < cartList.size(); i++) {
             rowData[i][0] = cartList.get(i).getName();
@@ -60,7 +82,7 @@ public class OrderFrame extends javax.swing.JFrame {
         beverageMenuComboBox = new javax.swing.JComboBox<>();
         beverageMenuAddButton = new javax.swing.JButton();
         foodMenuAddButton = new javax.swing.JButton();
-        menuImagePanel = new javax.swing.JPanel();
+        menuImageLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         cartMenuDeleteButton = new javax.swing.JButton();
         cartMenuDeleteAllButton = new javax.swing.JButton();
@@ -68,12 +90,14 @@ public class OrderFrame extends javax.swing.JFrame {
         closeButton = new javax.swing.JButton();
 
         foodComboList = menuController.getCategoryNameList("음식");
+
         beverageComboList= menuController.getCategoryNameList("음료");
+
+
+        setMenuImagePreviewLabel(PREVEIW_IMAGE_PATH);
 
         cartListTable.setModel(new javax.swing.table.DefaultTableModel(rowData, columnNames)
         {
-
-
             boolean[] canEdit = new boolean [] {
                     false, false, false
             };
@@ -108,6 +132,7 @@ public class OrderFrame extends javax.swing.JFrame {
 
 
 
+
         foodLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 14)); // NOI18N
         foodLabel.setHorizontalAlignment(CENTER);
         foodLabel.setText("음식");
@@ -121,6 +146,12 @@ public class OrderFrame extends javax.swing.JFrame {
         });
 
         beverageMenuComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(beverageComboList));
+
+        beverageMenuComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                foodMenuComboBoxActionPerformed(evt);
+            }
+        });
 
         beverageMenuAddButton.setText("음료 추가");
         beverageMenuAddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -176,8 +207,8 @@ public class OrderFrame extends javax.swing.JFrame {
         );
         setJPanelStyle(menuTabPanel);
 
-        javax.swing.GroupLayout menuImagePanelLayout = new javax.swing.GroupLayout(menuImagePanel);
-        menuImagePanel.setLayout(menuImagePanelLayout);
+        javax.swing.GroupLayout menuImagePanelLayout = new javax.swing.GroupLayout(menuImageLabel);
+        menuImageLabel.setLayout(menuImagePanelLayout);
         menuImagePanelLayout.setHorizontalGroup(
                 menuImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -186,7 +217,7 @@ public class OrderFrame extends javax.swing.JFrame {
                 menuImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 0, Short.MAX_VALUE)
         );
-        setJPanelStyle(menuImagePanel);
+
 
 
 
@@ -235,7 +266,7 @@ public class OrderFrame extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(menuTabPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(menuImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addComponent(menuImageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addComponent(closeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(payButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -250,7 +281,7 @@ public class OrderFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(menuTabPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(menuImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(menuImageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -367,18 +398,16 @@ public class OrderFrame extends javax.swing.JFrame {
             return;
         }
         else {
-            ImageIcon resizeImageIcon = menuController.getImage(menu.getName());
-            menuImagePanel.removeAll();
-            menuImagePanel.add(new JLabel(resizeImageIcon));
-            menuImagePanel.repaint();
-            System.out.println("image upload success");
+            setMenuImagePreviewLabel(menu.getImage());
         }
 
     }
 
     private void beverageMenuComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-
+        String selected = (String) beverageMenuComboBox.getSelectedItem();
+        MenuDto menu = menuController.getMenu(selected);
+        setMenuImagePreviewLabel(menu.getImage());
     }
 
 
@@ -421,7 +450,7 @@ public class OrderFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable cartListTable;
-    private javax.swing.JPanel menuImagePanel;
+    private javax.swing.JLabel menuImageLabel;
     private javax.swing.JPanel menuTabPanel;
     private javax.swing.JButton payButton;
     private javax.swing.JLabel titleLabel;

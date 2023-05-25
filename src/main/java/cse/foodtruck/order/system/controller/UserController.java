@@ -1,6 +1,7 @@
 package cse.foodtruck.order.system.controller;
 
 import cse.foodtruck.order.system.dto.user.*;
+import cse.foodtruck.order.system.entity.user.User;
 import cse.foodtruck.order.system.service.user.UserService;
 
 import java.sql.Timestamp;
@@ -26,8 +27,8 @@ public class UserController {
         return user;
     }
 
-    public UserDto signUp(String id, String newPw, String checkPw, String name, String email, Timestamp timestamp, String form){
-        UserSignUpDto dto = new UserSignUpDto(id, newPw, checkPw, name, email, timestamp, form);
+    public UserDto signUp(String id, String newPw, String checkPw, String name, String email, Timestamp timestamp, String form, int balance){
+        UserSignUpDto dto = new UserSignUpDto(id, newPw, checkPw, name, email, timestamp, form, balance);
         UserDto user = userService.signUp(dto);
         return user;
     }
@@ -59,6 +60,13 @@ public class UserController {
     public ArrayList<UserDto> getUserListBySearch(String searchType, String searchWord){
         ArrayList<UserDto> result = userService.getUserListBySearch(searchType, searchWord);
         return result;
+    }
+
+    public UserDto updateUserInfo(String id, String name, String email, String pw, int balance, Timestamp signUpDate, String form){
+        UserUpdateDto dto = new UserUpdateDto(id, name, email, pw, balance, signUpDate, form);
+        UserDto user = userService.updateUserInfo(dto);
+        user.toString();
+        return user;
     }
 
 }

@@ -8,6 +8,7 @@ import cse.foodtruck.order.system.controller.UserController;
 import cse.foodtruck.order.system.dto.user.UserDto;
 import cse.foodtruck.order.system.frame.UserMainFrame;
 import cse.foodtruck.order.system.frame.admin.AdminMainFrame;
+import cse.foodtruck.order.system.frame.seller.SellerMainFrame;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 import javax.swing.*;
@@ -47,7 +48,7 @@ public class LoginFrame extends javax.swing.JFrame {
         signUpButton = new javax.swing.JLabel();
         title = new javax.swing.JLabel();
 
-
+        idField.requestFocus();
         jScrollPane1.setViewportView(jEditorPane1);
 
         jPasswordField1.setToolTipText("비밀번호");
@@ -167,6 +168,7 @@ public class LoginFrame extends javax.swing.JFrame {
         String inputId = idField.getText();
         String inputPw = pwField.getText();
 
+
             //공백만 입력된 경우
             if(inputId.replaceAll(" ","").equals("") || inputPw.replaceAll(" ","").equals("")){
                 JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 입력하세요.");
@@ -185,7 +187,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 Singleton.getInstance().setUserDto(user);
                 //회원 유형에 맞는 프레임 생성
                 if(user.getForm().equals("판매자")){
-                    //new SellerFrame(user);
+                    new SellerMainFrame();
                 }
                 else if(user.getForm().equals("관리자")){
                     new AdminMainFrame();

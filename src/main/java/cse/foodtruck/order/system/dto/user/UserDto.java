@@ -21,6 +21,7 @@ public class UserDto {
     private String email;
     private Timestamp signUpDate;
     private String form;
+    private int balance;
 
 
 
@@ -31,7 +32,8 @@ public class UserDto {
                     entity.getName(),
                     entity.getEmail(),
                     entity.getSignUpDate(),
-                    entity.getForm()
+                    entity.getForm(),
+                    entity.getBalance()
                 );
     }
 }

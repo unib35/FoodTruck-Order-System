@@ -19,4 +19,5 @@ public class UserSignUpDto {
     private String email;
     private Timestamp signUpDate;
     private String form;
+    private int balance;
 }

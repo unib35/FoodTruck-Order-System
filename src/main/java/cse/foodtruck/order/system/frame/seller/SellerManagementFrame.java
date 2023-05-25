@@ -168,6 +168,7 @@ public class SellerManagementFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setVisible(true);
     }// </editor-fold>
 
     private void MenuEditButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,6 +177,8 @@ public class SellerManagementFrame extends javax.swing.JFrame {
 
     private void menuUploadButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        dispose();
+        new SellerMenuUploadFrame();
     }
 
     private void menuDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,6 +200,7 @@ public class SellerManagementFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
         new SellerMainFrame();
+        JOptionPane.showMessageDialog(null,"로그아웃이 완료되었습니다.");
     }
 
     private void menuCategoryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,36 +219,6 @@ public class SellerManagementFrame extends javax.swing.JFrame {
             showMenuList(searchMenuListByCategory);
         }
 
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SellerManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SellerManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SellerManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SellerManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SellerManagementFrame().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify

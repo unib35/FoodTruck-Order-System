@@ -59,6 +59,18 @@ public class MenuController {
 
     }
 
+    public MenuDto menuCheck(String menuName){
+        MenuDto result = menuService.menuCheck(menuName);
+        if(result == null) return null;
+        else return result;
+    }
+
+    public MenuDto upLoadMenu(MenuDto dto){
+        MenuDto result = menuService.upLoadMenu(dto);
+        if(result == null) return null;
+        else return result;
+    }
+
 
 
 }

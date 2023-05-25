@@ -34,7 +34,7 @@ public class UserService {
         //중복확인 버튼 사용
         //User target = userRepository.findById(dto.getId());
         //if(target == null) return null;
-        User user = new User(dto.getId(), dto.getNewPw(), dto.getName(), dto.getEmail(), dto.getSignUpDate(), dto.getForm());
+        User user = new User(dto.getId(), dto.getNewPw(), dto.getName(), dto.getEmail(), dto.getSignUpDate(), dto.getForm(), dto.getBalance());
 
         userRepository.save(user);
 
@@ -92,6 +92,13 @@ public class UserService {
         }
 
         return resultList;
+    }
+
+    public UserDto updateUserInfo(UserUpdateDto dto){
+        User user = User.toEntity(dto);
+        UserDto result = UserDto.createDto(userRepository.update(user));
+        if(result == null) return null;
+        else return result;
     }
 
 }

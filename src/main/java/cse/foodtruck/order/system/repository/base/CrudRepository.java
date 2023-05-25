@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 public class CrudRepository<T, PK> extends Repository{
     private T entity;
@@ -115,6 +116,50 @@ public class CrudRepository<T, PK> extends Repository{
             return null;
         }
         finally { db.close(); }
+    }
+
+    public T update(T entity){
+        try{
+            conn = db.connect();
+
+            String sql = updateQuery();
+            pstmt = conn.prepareStatement(sql);
+
+            for (int i = 0; i < fieldList.length; i++)
+                pstmt.setObject(i+1, fieldList[i].get(entity));
+
+            Class<?> entityClass = entity.getClass();
+            Field idField = entityClass.getDeclaredField(pkFieldName);
+            idField.setAccessible(true);
+
+            PK pk = (PK) idField.get(entity);
+
+            pstmt.setObject(fieldList.length + 1, pk);
+
+            int result = pstmt.executeUpdate();
+
+            // update 된 쿼리가 0개면 null 리턴
+            return result > 0 ? entity : null;
+        }
+        catch(IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException | SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        finally { db.close(); }
+    }
+
+    private String updateQuery(){
+        StringBuilder sb = new StringBuilder("UPDATE " + tableName + " SET ");
+        StringJoiner sj = new StringJoiner(",");
+
+
+        for (Field field : fieldList) {
+            sj.add(field.getName() + " = ?");
+        }
+
+        sb.append(sj).append(" WHERE ").append(pkFieldName).append(" = ?;");
+
+        return sb.toString();
     }
 
     public String insertQuery() {

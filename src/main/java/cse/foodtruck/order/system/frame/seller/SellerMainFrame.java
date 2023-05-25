@@ -5,6 +5,7 @@
 package cse.foodtruck.order.system.frame.seller;
 
 import cse.foodtruck.order.system.dto.user.UserDto;
+import cse.foodtruck.order.system.frame.auth.LoginFrame;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 /**
@@ -35,7 +36,7 @@ public class SellerMainFrame extends javax.swing.JFrame {
         titleLabel.setText("푸드트럭 판매자 모드");
         titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        UserNameLabel.setText("유저명님 반가워요!");
+        UserNameLabel.setText(user.getName() + "님 반가워요!");
 
         myPageButton.setText("마이페이지");
         myPageButton.addActionListener(new java.awt.event.ActionListener() {
@@ -45,6 +46,9 @@ public class SellerMainFrame extends javax.swing.JFrame {
         });
 
         logoutButton.setText("로그아웃");
+        logoutButton.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt) { logoutButtonActionPerformed(evt);}
+        });
 
         MenuButton.setText("메뉴 관리");
         MenuButton.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +90,7 @@ public class SellerMainFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setVisible(true);
     }// </editor-fold>
 
     private void myPageButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,43 +99,16 @@ public class SellerMainFrame extends javax.swing.JFrame {
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-
+        dispose();
+        new SellerManagementFrame();
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SellerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SellerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SellerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SellerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SellerMainFrame().setVisible(true);
-            }
-        });
+    //logout Button actionperform
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt){
+        dispose();
+        new LoginFrame();
     }
+
 
     // Variables declaration - do not modify
     private javax.swing.JButton MenuButton;

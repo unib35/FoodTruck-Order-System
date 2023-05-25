@@ -98,6 +98,12 @@ public class MenuService {
         else return false;
     }
 
+    public MenuDto menuCheck(String name){
+        Menu menu = menuRepository.findById(name);
+        if(menu == null) return null;
+        else return MenuDto.createDto(menu);
+    }
+
 
 
 }
