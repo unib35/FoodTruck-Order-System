@@ -2,9 +2,7 @@ package cse.foodtruck.order.system.frame;
 
 import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
-import cse.foodtruck.order.system.pattern.strategy.CardStrategy;
-import cse.foodtruck.order.system.pattern.strategy.CashStrategy;
-import cse.foodtruck.order.system.pattern.strategy.PaymentStrategy;
+import cse.foodtruck.order.system.pattern.strategy.Payment;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 public class PayFrame extends javax.swing.JFrame {
 
     MenuController menuController = MenuController.getInstance();
-    private PaymentStrategy paymentStrategy = null;
+    private Payment payService = null;
     int totalPrice = 0;
 
     public PayFrame(ArrayList<MenuDto> cartList, javax.swing.JTable cartTable) {
@@ -242,8 +240,7 @@ public class PayFrame extends javax.swing.JFrame {
 
         if(paymentComboBox.getSelectedItem().equals("카드 결제")){
 
-            //this.paymentStrategy.setPayment(new CardStrategy());
-            //paymentStrategy.pay(totalPrice);
+            payService
             JOptionPane.showMessageDialog(null, "카드 결제가 완료되었습니다.", "결제 완료", JOptionPane.INFORMATION_MESSAGE);
 
 

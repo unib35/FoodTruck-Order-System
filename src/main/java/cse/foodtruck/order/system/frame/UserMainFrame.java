@@ -117,6 +117,7 @@ public class UserMainFrame extends javax.swing.JFrame {
 
         pack();
         setVisible(true);
+        System.out.println(this.user);
     }// </editor-fold>
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {

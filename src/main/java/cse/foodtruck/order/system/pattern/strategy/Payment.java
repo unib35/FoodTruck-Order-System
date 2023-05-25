@@ -1,7 +1,7 @@
 package cse.foodtruck.order.system.pattern.strategy;
 
-public abstract class Payment {
-    protected PaymentStrategy paymentStrategy;
+import cse.foodtruck.order.system.dto.pay.PaymentInfoDto;
 
-
+public interface Payment {
+    public abstract void pay(PaymentInfoDto dto);
 }

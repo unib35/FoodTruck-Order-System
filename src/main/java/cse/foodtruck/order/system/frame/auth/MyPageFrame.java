@@ -8,6 +8,7 @@ import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 import javax.swing.*;
 
+import java.sql.SQLOutput;
 import java.util.regex.Pattern;
 
 
@@ -17,7 +18,7 @@ import java.util.regex.Pattern;
  */
 public class MyPageFrame extends javax.swing.JFrame {
 
-    UserDto user = Singleton.getInstance().getUserDto();
+    private UserDto user = Singleton.getInstance().getUserDto();
     UserController userController = UserController.getInstance();
 
     final String AGREE_ICON = "src/main/java/cse/foodtruck/order/system/image/notification.png";
@@ -317,7 +318,7 @@ public class MyPageFrame extends javax.swing.JFrame {
             UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), result, user.getPw(), user.getBalance(), user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "이메일이 변경되었습니다.");
-                this.user = updateUser;
+                Singleton.getInstance().setUserDto(updateUser);
                 emailField.setText(user.getEmail());
             } else {
                 JOptionPane.showMessageDialog(null, "이메일 변경에 실패하였습니다.");
@@ -335,8 +336,10 @@ public class MyPageFrame extends javax.swing.JFrame {
             UserDto updateUser = userController.updateUserInfo(user.getId(), result, user.getEmail(), user.getPw(), user.getBalance(), user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "이름이 변경되었습니다.");
-                this.user = updateUser;
-                nameField.setText(user.getName());
+                Singleton.getInstance().setUserDto(updateUser);
+                this.user = Singleton.getInstance().getUserDto();
+
+
             } else {
                 JOptionPane.showMessageDialog(null, "이름 변경에 실패하였습니다.");
             }
@@ -370,8 +373,8 @@ public class MyPageFrame extends javax.swing.JFrame {
                 UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), user.getEmail(), user.getPw(), user.getBalance() - withdraw, user.getSignUpDate(), user.getForm());
                 if(updateUser != null) {
                     JOptionPane.showMessageDialog(null, "출금이 완료되었습니다.");
-                    this.user = updateUser;
-                    balanceField.setText(String.valueOf(user.getBalance()));
+                    Singleton.getInstance().setUserDto(updateUser);
+                    balanceField.setText(String.valueOf(updateUser.getBalance()));
                 } else {
                     JOptionPane.showMessageDialog(null, "출금에 실패하였습니다.");
                 }
@@ -402,8 +405,8 @@ public class MyPageFrame extends javax.swing.JFrame {
             UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), user.getEmail(), user.getPw(), user.getBalance() + deposit, user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "입금이 완료되었습니다.");
-                this.user = updateUser;
-                balanceField.setText(String.valueOf(user.getBalance()) + "원");
+                Singleton.getInstance().setUserDto(updateUser);
+                balanceField.setText(String.valueOf(updateUser.getBalance()) + "원");
             } else {
                 JOptionPane.showMessageDialog(null, "입금에 실패하였습니다.");
             }
