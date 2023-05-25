@@ -1,8 +1,11 @@
-package cse.foodtruck.order.system.frame;
+package cse.foodtruck.order.system.frame.pay;
 
 import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
-import cse.foodtruck.order.system.pattern.strategy.Payment;
+import cse.foodtruck.order.system.frame.OrderFrame;
+import cse.foodtruck.order.system.pattern.bridge.CardPayment;
+import cse.foodtruck.order.system.pattern.bridge.CashPayment;
+import cse.foodtruck.order.system.pattern.bridge.PaymentMethod;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -14,8 +17,18 @@ import java.util.ArrayList;
  */
 public class PayFrame extends javax.swing.JFrame {
 
+
+    //브릿지 패턴
+    private PaymentMethod paymentMethod;
+    public void setPaymentMethod(PaymentMethod paymentMethod){
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void processPayment(){
+        this.paymentMethod.processPayment();
+    }
+
     MenuController menuController = MenuController.getInstance();
-    private Payment payService = null;
     int totalPrice = 0;
 
     public PayFrame(ArrayList<MenuDto> cartList, javax.swing.JTable cartTable) {
@@ -240,17 +253,20 @@ public class PayFrame extends javax.swing.JFrame {
 
         if(paymentComboBox.getSelectedItem().equals("카드 결제")){
 
-            payService
-            JOptionPane.showMessageDialog(null, "카드 결제가 완료되었습니다.", "결제 완료", JOptionPane.INFORMATION_MESSAGE);
-
+            JOptionPane.showMessageDialog(null, "카드 결제창으로 이동합니다.", "카드 결제", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            this.setPaymentMethod(new CardPayment(totalPrice));
+            this.processPayment();
 
         }else if(paymentComboBox.getSelectedItem().equals("현금 결제")){
-            //paymentStrategy = new CashStrategy();
-            JOptionPane.showMessageDialog(null, "현금 결제가 완료되었습니다.", "결제 완료", JOptionPane.INFORMATION_MESSAGE);
 
+            JOptionPane.showMessageDialog(null, "현금 결제창으로 이동합니다.", "카드 결제", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            this.setPaymentMethod(new CashPayment(totalPrice));
+            this.processPayment();
         }
-        dispose();
-        new PayCompleteFrame();
+        //dispose();
+        //new PayCompleteFrame();
     }
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {

@@ -374,7 +374,7 @@ public class MyPageFrame extends javax.swing.JFrame {
                 if(updateUser != null) {
                     JOptionPane.showMessageDialog(null, "출금이 완료되었습니다.");
                     Singleton.getInstance().setUserDto(updateUser);
-                    balanceField.setText(String.valueOf(updateUser.getBalance()));
+                    balanceField.setText(String.valueOf(updateUser.getBalance() + "원"));
                 } else {
                     JOptionPane.showMessageDialog(null, "출금에 실패하였습니다.");
                 }

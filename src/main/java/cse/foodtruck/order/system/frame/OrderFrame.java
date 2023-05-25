@@ -4,7 +4,9 @@ package cse.foodtruck.order.system.frame;
 import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
 import cse.foodtruck.order.system.dto.user.UserDto;
+import cse.foodtruck.order.system.frame.pay.PayFrame;
 import cse.foodtruck.order.system.frame.seller.SellerMenuUploadFrame;
+import cse.foodtruck.order.system.pattern.bridge.PaymentMethod;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 import javax.imageio.ImageIO;
@@ -27,14 +29,14 @@ import static javax.swing.SwingConstants.CENTER;
 public class OrderFrame extends javax.swing.JFrame {
 
 
-    /**
-     * Creates new form MenuFrame
-     */
+
     public ArrayList<MenuDto> menuList;
     public ArrayList<MenuDto> cartList = new ArrayList<>();
     public String[] foodComboList;
     public String[] beverageComboList;
     final String PREVEIW_IMAGE_PATH = "./src/main/java/cse/foodtruck/order/system/image/menu/preview.png";
+
+
 
     private String columnNames[] = {"메뉴", "가격", "카테고리"};
     private Object rowData[][];

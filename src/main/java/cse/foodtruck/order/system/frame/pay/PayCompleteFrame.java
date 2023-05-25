@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package cse.foodtruck.order.system.frame;
+package cse.foodtruck.order.system.frame.pay;
 
 import cse.foodtruck.order.system.dto.user.UserDto;
+import cse.foodtruck.order.system.frame.UserMainFrame;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 /**

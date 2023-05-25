@@ -14,11 +14,15 @@ public class UserIdCheckDto {
     private String email;
 
 
+
+
     public static UserIdCheckDto createDto(String email, String name) {
         return UserIdCheckDto.builder()
                 .name(name)
                 .email(email)
                 .build();
     }
+
+
 
 }

@@ -4,8 +4,7 @@
 
 package cse.foodtruck.order.system;
 
-import cse.foodtruck.order.system.frame.OrderFrame;
-import cse.foodtruck.order.system.frame.PayFrame;
+import cse.foodtruck.order.system.frame.pay.PayFrame;
 import cse.foodtruck.order.system.frame.auth.LoginFrame;
 
 /**

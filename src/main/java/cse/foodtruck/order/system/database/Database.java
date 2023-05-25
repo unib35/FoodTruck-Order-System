@@ -1,11 +1,14 @@
 package cse.foodtruck.order.system.database;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+@Slf4j
 
 public class Database {
     private static Database dbInstance = new Database();
@@ -27,12 +30,12 @@ public class Database {
     public Connection connect(){
         try{
             Class.forName(JDBC_DRIVER);
-            System.out.println("Connecting to database...");
+            log.info("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, dbID, dbPW);
-            System.out.println("Connected to database...");
+            log.info("Database connected!");
             return conn;
         } catch (SQLException e) {
-            System.out.println("DB Connection Error!! : " + e);
+            log.info("Database connection failed!");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -45,7 +48,7 @@ public class Database {
             if(stmt != null) stmt.close();
             if(conn != null) conn.close();
         } catch (SQLException e) {
-            System.out.println("DB Close Error!! : " + e);
+            log.info("Database close failed!");
         }
     }
 
@@ -57,12 +60,6 @@ public class Database {
     }
     public ResultSet getResultSet(){
         return null;
-    }
-
-    public static void main(String[] args) {
-
-        Database db = new Database();
-        db.connect();
     }
 }
 
