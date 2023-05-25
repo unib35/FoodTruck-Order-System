@@ -26,6 +26,6 @@
 - Singleton
 - Builder
 - Observer
-- ~~Strategy~~
-- Iterator
+- Strategy
+- ~~Iterator~~
 - ~~Decorator~~
