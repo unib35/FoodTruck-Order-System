@@ -1,16 +1,22 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package cse.foodtruck.order.system.frame.auth;
 
 import cse.foodtruck.order.system.controller.UserController;
 import cse.foodtruck.order.system.dto.user.UserDto;
-import cse.foodtruck.order.system.dto.user.UserUpdateDto;
 import cse.foodtruck.order.system.frame.UserMainFrame;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
+import cse.foodtruck.order.system.pattern.state.NotifyStateIcon;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import java.sql.SQLOutput;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.regex.Pattern;
-
 
 /**
  *
@@ -20,10 +26,12 @@ public class MyPageFrame extends javax.swing.JFrame {
 
     private UserDto user = Singleton.getInstance().getUserDto();
     UserController userController = UserController.getInstance();
+    NotifyStateIcon notifyStateIcon = new NotifyStateIcon();
+    public static final String NOTIFY_AGREE_ICON = "src/main/java/cse/foodtruck/order/system/image/notification.png";
+    //public static final String NOTIFY_DISAGREE_ICON = "src/main/java/cse/foodtruck/order/system/image/blockNotification.png";
 
-    final String AGREE_ICON = "src/main/java/cse/foodtruck/order/system/image/notification.png";
-    final String DISAGREE_ICON = "src/main/java/cse/foodtruck/order/system/image/blockNotification.png";
-    private boolean isAgree = false;
+
+
 
     public MyPageFrame() {
         initComponents();
@@ -44,7 +52,7 @@ public class MyPageFrame extends javax.swing.JFrame {
         nameField = new javax.swing.JTextField();
         titleLabel2 = new javax.swing.JLabel();
         titleLabel3 = new javax.swing.JLabel();
-        notificationButton = new javax.swing.JButton();
+        notifyAgreeButton = new javax.swing.JButton();
         passwordChangeButton = new javax.swing.JButton();
         emailField = new javax.swing.JTextField();
         emailChangeButton = new javax.swing.JButton();
@@ -53,6 +61,9 @@ public class MyPageFrame extends javax.swing.JFrame {
         balanceField = new javax.swing.JTextField();
         withDrawButton = new javax.swing.JButton();
         depositButton = new javax.swing.JButton();
+        notifyDisagreeButton = new javax.swing.JButton();
+        NotifyStausLabel = new javax.swing.JLabel();
+
 
         jButton1.setText("jButton1");
 
@@ -82,6 +93,7 @@ public class MyPageFrame extends javax.swing.JFrame {
         idField.setToolTipText("아이디");
         idField.setText(user.getId());
         idField.setEnabled(false);
+
         idField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idFieldActionPerformed(evt);
@@ -109,16 +121,11 @@ public class MyPageFrame extends javax.swing.JFrame {
         titleLabel3.setText("안녕하세요!");
         titleLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-
-        notificationButton.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 8)); // NOI18N
-
-        notificationButton.setIcon(new javax.swing.ImageIcon(DISAGREE_ICON));
-        notificationButton.setVerticalAlignment(SwingConstants.CENTER);
-
-
-        notificationButton.addActionListener(new java.awt.event.ActionListener() {
+        notifyAgreeButton.setFont(new java.awt.Font("Helvetica Neue", 0, 10)); // NOI18N
+        notifyAgreeButton.setText("알림수신");
+        notifyAgreeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notificationButtonActionPerformed(evt);
+                notifyAgreeButtonActionPerformed(evt);
             }
         });
 
@@ -153,7 +160,6 @@ public class MyPageFrame extends javax.swing.JFrame {
         });
 
         balanceLabel.setText("잔고");
-
         balanceField.setText(String.valueOf(user.getBalance()) + "원");
         balanceField.setEnabled(false);
         balanceField.addActionListener(new java.awt.event.ActionListener() {
@@ -176,6 +182,25 @@ public class MyPageFrame extends javax.swing.JFrame {
             }
         });
 
+        notifyDisagreeButton.setFont(new java.awt.Font("Helvetica Neue", 0, 10)); // NOI18N
+        notifyDisagreeButton.setText("알림차단");
+        notifyDisagreeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                notifyDisagreeButtonActionPerformed(evt);
+            }
+        });
+
+        NotifyStausLabel.setText("");
+        try {
+            BufferedImage bi = ImageIO.read(new File(NOTIFY_AGREE_ICON));
+            ImageIcon icon = new ImageIcon(bi);
+            Image image = icon.getImage();
+            Image resizedImage = image.getScaledInstance(80, 63 , Image.SCALE_SMOOTH);
+            NotifyStausLabel.setIcon(new ImageIcon(resizedImage));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -187,31 +212,41 @@ public class MyPageFrame extends javax.swing.JFrame {
                                                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(20, 20, 20)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(titleLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(nameLabel)
-                                                                .addComponent(idLabel)
-                                                                .addComponent(emailLabel)
-                                                                .addComponent(closeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(titleLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(passwordChangeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(nameLabel)
+                                                        .addComponent(emailLabel)
                                                         .addComponent(balanceLabel)
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                                         .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(idField, javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                .addComponent(balanceField, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                                                                .addComponent(balanceField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                                 .addComponent(depositButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addComponent(nameChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(emailChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(notificationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(withDrawButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                                        .addComponent(withDrawButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(passwordChangeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(closeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addComponent(idField)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(notifyAgreeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(idLabel)
+                                                                                        .addComponent(titleLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(titleLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addGap(87, 87, 87)))
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(notifyDisagreeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                                                        .addComponent(NotifyStausLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -219,16 +254,23 @@ public class MyPageFrame extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(titleLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(titleLabel3)
-                                .addGap(10, 10, 10)
-                                .addComponent(idLabel)
-                                .addGap(2, 2, 2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                                                .addComponent(titleLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(titleLabel3)
+                                                .addGap(10, 10, 10)
+                                                .addComponent(idLabel)
+                                                .addGap(2, 2, 2))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(NotifyStausLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(18, 18, 18)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(notificationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(notifyAgreeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(notifyDisagreeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(emailLabel)
                                 .addGap(2, 2, 2)
@@ -255,42 +297,26 @@ public class MyPageFrame extends javax.swing.JFrame {
                                 .addGap(20, 20, 20))
         );
 
+
         pack();
         setVisible(true);
     }// </editor-fold>
 
-
-
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-
     }
 
     private void nameFileldActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-
-
     }
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
     }
 
     private void balanceFieldActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }
-
-    private void notificationButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        if(isAgree){
-            isAgree = false;
-            JOptionPane.showMessageDialog(null, "알림을 차단합니다.");
-            notificationButton.setIcon(new javax.swing.ImageIcon(DISAGREE_ICON));
-        } else{
-            isAgree = true;
-            JOptionPane.showMessageDialog(null, "알림을 수신합니다.");
-            notificationButton.setIcon(new javax.swing.ImageIcon(AGREE_ICON));
-        }
     }
 
     private void emailChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,6 +350,7 @@ public class MyPageFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "이메일 변경에 실패하였습니다.");
             }
         }
+
     }
 
     private void nameChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,6 +373,7 @@ public class MyPageFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "이름 변경에 실패하였습니다.");
             }
         }
+
     }
 
     private void withDrawButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -383,6 +411,7 @@ public class MyPageFrame extends javax.swing.JFrame {
                 }
             }
         }
+
     }
 
     private void depositButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -417,6 +446,7 @@ public class MyPageFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "입금에 실패하였습니다.");
             }
         }
+
     }
 
     private void passwordChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -429,9 +459,22 @@ public class MyPageFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
         new UserMainFrame();
+
     }
 
+    private void notifyDisagreeButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        notifyStateIcon.clickNotifyDisagreeButton(NotifyStausLabel);
+    }
+
+    private void notifyAgreeButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        notifyStateIcon.clickNotifyAgreeButton(NotifyStausLabel);
+    }
+
+
     // Variables declaration - do not modify
+    private javax.swing.JLabel NotifyStausLabel;
     private javax.swing.JTextField balanceField;
     private javax.swing.JLabel balanceLabel;
     private javax.swing.JButton closeButton;
@@ -439,7 +482,6 @@ public class MyPageFrame extends javax.swing.JFrame {
     private javax.swing.JButton emailChangeButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
-    private javax.swing.JButton notificationButton;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel idLabel;
     private javax.swing.JButton jButton1;
@@ -447,6 +489,8 @@ public class MyPageFrame extends javax.swing.JFrame {
     private javax.swing.JButton nameChangeButton;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JButton notifyAgreeButton;
+    private javax.swing.JButton notifyDisagreeButton;
     private javax.swing.JButton passwordChangeButton;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel titleLabel2;
