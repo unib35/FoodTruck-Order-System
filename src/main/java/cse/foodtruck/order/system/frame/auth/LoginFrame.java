@@ -68,7 +68,7 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
-        pwField.setText("");
+        pwField.setText("aaaa");
         pwField.setToolTipText("");
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);

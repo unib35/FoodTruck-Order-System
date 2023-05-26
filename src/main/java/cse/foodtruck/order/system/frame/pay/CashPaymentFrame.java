@@ -56,6 +56,7 @@ public class CashPaymentFrame extends javax.swing.JFrame {
         cardNumberLabel.setText("현금 영수증 등록 번호");
 
         receiptNumberField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        receiptNumberField.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -198,7 +199,7 @@ public class CashPaymentFrame extends javax.swing.JFrame {
         String receiptNumber = receiptNumberField.getText();
 
         //영수증 번호에 입력값이 없을때 결제 불가능하다는 알림창
-        if(receiptNumberField.getText().length() == 0){
+        if(receiptNumberField.getText().length() == 0 && installmentCheckbox.isSelected() == true){
             JOptionPane.showMessageDialog(null, "영수증 번호를 입력해주세요.", "결제 불가", JOptionPane.ERROR_MESSAGE);
             receiptNumberField.requestFocus(); //필드에 입력하도록 포커스 맞춤
             return;
@@ -212,7 +213,7 @@ public class CashPaymentFrame extends javax.swing.JFrame {
         }
 
         //영수증 처리 구분, 영수증 번호를 확인하는 알림창. 결제, 닫기 버튼 선택 가능
-        String infoMessage = "<html><b>결제정보<br>영수증 처리 구분 : " + receiptType + "<br>영수증 번호 : " + receiptNumber + "<br><br>결제금액 : " + totalPrice +" 원<br>잔액 : "  + user.getBalance() + "원</html>";
+        String infoMessage = "<html><b>결제정보<br>영수증 처리 구분 : " + receiptType + "<br>영수증 번호 : " + receiptNumber + "<br><br>결제금액 : " + (user.getBalance() - totalPrice) +" 원</html>";
 
         int result = JOptionPane.showConfirmDialog(null, infoMessage, "결제 확인", JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
@@ -262,10 +263,12 @@ public class CashPaymentFrame extends javax.swing.JFrame {
             receiptTypeComboBox.setEnabled(true);
             receiptNumberField.setEnabled(true);
 
+
         }
         else{
             receiptTypeComboBox.setEnabled(false);
             receiptNumberField.setEnabled(false);
+            receiptNumberField.setText("");
         }
     }
 

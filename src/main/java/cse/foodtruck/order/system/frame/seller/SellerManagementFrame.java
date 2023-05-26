@@ -2,6 +2,7 @@ package cse.foodtruck.order.system.frame.seller;
 
 import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
+import cse.foodtruck.order.system.pattern.singleton.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -177,6 +178,17 @@ public class SellerManagementFrame extends javax.swing.JFrame {
 
     private void MenuEditButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        int selectedRow = menuListTable.getSelectedRow();
+        if(selectedRow == -1){
+            JOptionPane.showMessageDialog(null, "수정할 메뉴를 선택해주세요.");
+            return;
+        }
+
+        String menuId = menuListTable.getValueAt(selectedRow, 0).toString();
+        MenuDto target = menuController.getMenu(menuId);
+        Singleton.getInstance().setMenuDto(target);
+        new SellerMenuUpdateFrame();
+        dispose();
     }
 
     private void menuUploadButtonActionPerformed(java.awt.event.ActionEvent evt) {

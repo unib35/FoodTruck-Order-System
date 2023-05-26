@@ -24,7 +24,7 @@ public class Menu {
     public static Menu toEntity(MenuDto dto){
         return Menu.builder()
                 .name(dto.getName())
-                .name(dto.getName())
+                .price(dto.getPrice())
                 .image(dto.getImage())
                 .category(dto.getCategory())
                 .build();

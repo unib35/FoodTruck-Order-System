@@ -486,21 +486,19 @@ public class CardPaymentFrame extends javax.swing.JFrame {
             if(totalPrice > user.getBalance()){
                 JOptionPane.showMessageDialog(null, "잔액이 부족합니다.", "결제 오류", JOptionPane.ERROR_MESSAGE);
                 return;
+            } else{
+                UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(),user.getEmail(), user.getPw(), user.getBalance()-totalPrice, user.getSignUpDate(), user.getForm());
+                user = updateUser;
+                Singleton.getInstance().setUserDto(user);
+
+                //결제 로딩창
+                JOptionPane.showMessageDialog(null, "결제가 진행중입니다.", "결제", JOptionPane.INFORMATION_MESSAGE);
+                //결제가 완료되면 PayCompleteFrame으로 넘어감
+
+                String infoMesseage = "<html><b>결제정보<br>결제가 완료되었습니다.<br><br>결제금액 : " + totalPrice + "원</html>";
+                dispose();
+                new PayCompleteFrame(infoMesseage);
             }
-
-            UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(),user.getEmail(), user.getPw(), user.getBalance()-totalPrice, user.getSignUpDate(), user.getForm());
-            user = updateUser;
-            Singleton.getInstance().setUserDto(user);
-
-            //결제 로딩창
-            JOptionPane.showMessageDialog(null, "결제가 진행중입니다.", "결제", JOptionPane.INFORMATION_MESSAGE);
-            //결제가 완료되면 PayCompleteFrame으로 넘어감
-
-            String infoMesseage = "<html><b>결제정보<br>결제가 완료되었습니다.<br><br>결제금액 : " + totalPrice + "원<br>잔액 : " + user.getBalance() + "원</html>";
-
-
-            dispose();
-            new PayCompleteFrame(infoMesseage);
         }
     }
 

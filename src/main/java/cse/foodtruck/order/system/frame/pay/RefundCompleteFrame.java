@@ -32,10 +32,10 @@ public class RefundCompleteFrame extends javax.swing.JFrame {
         cancelLabel = new javax.swing.JLabel();
         cancelInfoLabel = new javax.swing.JLabel();
         homeButton = new javax.swing.JButton();
-        //totalPrice를 refundMessage에서 추출
-        int totalPrice = Integer.parseInt(refundMessage.substring(refundMessage.indexOf("총 결제 금액 : ") + 8, refundMessage.indexOf("원")));
 
-        UserDto updateUser = userController.updateUserInfo(user.getId(), getName(), user.getEmail(), user.getPw(), user.getBalance()-totalPrice, user.getSignUpDate(), user.getForm());
+        //int totalPrice =
+
+        UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), user.getEmail(), user.getPw(), user.getBalance(), user.getSignUpDate(), user.getForm());
         user = updateUser;
         Singleton.getInstance().setUserDto(user);
 
@@ -44,6 +44,8 @@ public class RefundCompleteFrame extends javax.swing.JFrame {
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("결제 취소");
         titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));

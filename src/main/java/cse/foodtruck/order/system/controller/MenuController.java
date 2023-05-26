@@ -71,6 +71,12 @@ public class MenuController {
         else return result;
     }
 
+    public MenuDto updateMenu(String name, String price, String category, String image){
+        MenuDto result = menuService.updateMenu(new MenuDto(name, Integer.parseInt(price), category, image));
+        if(result == null) return null;
+        else return result;
+    }
+
 
 
 }

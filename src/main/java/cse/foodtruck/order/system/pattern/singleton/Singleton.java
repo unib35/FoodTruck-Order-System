@@ -1,6 +1,7 @@
 package cse.foodtruck.order.system.pattern.singleton;
 
 import cse.foodtruck.order.system.database.Database;
+import cse.foodtruck.order.system.dto.menu.MenuDto;
 import cse.foodtruck.order.system.dto.user.UserDto;
 import lombok.Data;
 import lombok.Getter;
@@ -21,5 +22,5 @@ public class Singleton {
     }
 
     private UserDto userDto;
-    private Database database;
+    private MenuDto menuDto;
 }

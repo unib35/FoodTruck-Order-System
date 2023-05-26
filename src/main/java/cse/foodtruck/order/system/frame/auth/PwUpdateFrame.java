@@ -202,6 +202,8 @@ public class PwUpdateFrame extends javax.swing.JFrame {
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        dispose();
+        new MyPageFrame();
     }
 
 

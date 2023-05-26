@@ -104,6 +104,13 @@ public class MenuService {
         else return MenuDto.createDto(menu);
     }
 
+    public MenuDto updateMenu(MenuDto dto){
+        Menu menu = Menu.toEntity(dto);
+        MenuDto result = MenuDto.createDto(menuRepository.update(menu));
+        if(result == null) return null;
+        else return result;
+    }
+
 
 
 }

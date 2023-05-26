@@ -144,12 +144,15 @@ public class PayCompleteFrame extends javax.swing.JFrame {
 
     private void cancelPayButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        //결제 취소 여부 알림창
+
+        //결제 취소 여부를 물어보는 알림창
         int result = JOptionPane.showConfirmDialog(null, "결제를 취소하시겠습니까?", "결제 취소", JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            //결제 취소
             dispose();
+
             new RefundCompleteFrame(refundMessage);
+        } else{
+            return;
         }
     }
 
