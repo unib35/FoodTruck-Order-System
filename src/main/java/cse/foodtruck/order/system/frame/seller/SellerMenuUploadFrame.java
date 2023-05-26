@@ -106,7 +106,7 @@ public class SellerMenuUploadFrame extends javax.swing.JFrame {
 
         menuCategoryLabel.setText("카테고리");
 
-        menuCategoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "음식", "음료", "간식" }));
+        menuCategoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "음식", "음료"}));
 
         menuUploadButton.setText("메뉴 등록");
         menuUploadButton.addActionListener(new java.awt.event.ActionListener() {

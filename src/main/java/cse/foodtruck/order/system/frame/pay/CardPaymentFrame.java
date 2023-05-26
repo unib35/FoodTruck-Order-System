@@ -4,7 +4,14 @@
  */
 package cse.foodtruck.order.system.frame.pay;
 
+import cse.foodtruck.order.system.controller.UserController;
+import cse.foodtruck.order.system.dto.pay.PaymentInfoDto;
+import cse.foodtruck.order.system.dto.user.UserDto;
 import cse.foodtruck.order.system.frame.OrderFrame;
+import cse.foodtruck.order.system.pattern.memento.PaymentCaretaker;
+import cse.foodtruck.order.system.pattern.memento.PaymentMemento;
+import cse.foodtruck.order.system.pattern.memento.PaymentOriginator;
+import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -15,6 +22,12 @@ import java.awt.event.KeyEvent;
  * @author lee
  */
 public class CardPaymentFrame extends javax.swing.JFrame {
+
+    UserDto user = Singleton.getInstance().getUserDto();
+    UserController userController = UserController.userController;
+
+    PaymentOriginator paymentOriginator = new PaymentOriginator();
+    PaymentCaretaker paymentCaretaker = new PaymentCaretaker();
 
     private int totalPrice;
     public CardPaymentFrame(int totalPrice) {
@@ -48,8 +61,8 @@ public class CardPaymentFrame extends javax.swing.JFrame {
         installmentComboBox = new javax.swing.JComboBox<>();
         amountPricePanel = new javax.swing.JPanel();
         amountPriceLabel = new javax.swing.JLabel();
-        AmountOrderPriceTextLabel = new javax.swing.JLabel();
-        AmountOrderPriceLabel = new javax.swing.JLabel();
+        amountOrderPriceTextLabel = new javax.swing.JLabel();
+        amountOrderPriceLabel = new javax.swing.JLabel();
         payButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         cvcLabel = new javax.swing.JLabel();
@@ -186,12 +199,12 @@ public class CardPaymentFrame extends javax.swing.JFrame {
         amountPriceLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 14)); // NOI18N
         amountPriceLabel.setText("결제 금액");
 
-        AmountOrderPriceTextLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
-        AmountOrderPriceTextLabel.setText("주문 금액");
+        amountOrderPriceTextLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        amountOrderPriceTextLabel.setText("주문 금액");
 
-        AmountOrderPriceLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
-        AmountOrderPriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        AmountOrderPriceLabel.setText(totalPrice + "원");
+        amountOrderPriceLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        amountOrderPriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        amountOrderPriceLabel.setText(totalPrice + "원");
 
         javax.swing.GroupLayout amountPricePanelLayout = new javax.swing.GroupLayout(amountPricePanel);
         amountPricePanel.setLayout(amountPricePanelLayout);
@@ -201,9 +214,9 @@ public class CardPaymentFrame extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addGroup(amountPricePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(amountPricePanelLayout.createSequentialGroup()
-                                                .addComponent(AmountOrderPriceTextLabel)
+                                                .addComponent(amountOrderPriceTextLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(AmountOrderPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(amountOrderPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(amountPricePanelLayout.createSequentialGroup()
                                                 .addComponent(amountPriceLabel)
                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -215,8 +228,8 @@ public class CardPaymentFrame extends javax.swing.JFrame {
                                 .addComponent(amountPriceLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(amountPricePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(AmountOrderPriceTextLabel)
-                                        .addComponent(AmountOrderPriceLabel))
+                                        .addComponent(amountOrderPriceTextLabel)
+                                        .addComponent(amountOrderPriceLabel))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -284,7 +297,7 @@ public class CardPaymentFrame extends javax.swing.JFrame {
             @Override
             public void keyTyped(KeyEvent e) {
                 JTextField src = (JTextField) e.getSource();
-                if (src.getText().length() >= 2) {
+                if (src.getText().length() >= 4) {
                     e.consume();
                 }
             }
@@ -410,7 +423,10 @@ public class CardPaymentFrame extends javax.swing.JFrame {
         String cardCvc = cvcField.getText();
         String cardPw = cardPwField.getText();
         String installment = installmentComboBox.getSelectedItem().toString();
-        String amountPrice = amountPriceLabel.getText();
+        String amountPrice = amountOrderPriceLabel.getText();
+
+        int totalPrice = Integer.parseInt(amountPrice.substring(0, amountPrice.length()-1)); //원을 제거하기 위해 substring 사용
+
 
         //카드번호, 유효기간, cvc, 비밀번호, 할부개월, 결제금액을 출력하는 알림창을 결제, 취소 버튼으로 선택가능한 알림창
         int result = JOptionPane.showConfirmDialog(null, "카드번호 : " + cardNumber + "\n유효기간 : " + cardValidDate + "\ncvc : " + cardCvc + "\n비밀번호 : " + cardPw + "\n할부개월 : " + installment + "\n결제금액 : " + amountPrice + "\n\n입력하신 정보가 맞으면 결제를 진행하세요.", "결제", JOptionPane.YES_NO_OPTION);
@@ -466,9 +482,25 @@ public class CardPaymentFrame extends javax.swing.JFrame {
                 return;
             }
 
+            //결제금액이 잔액보다 클때
+            if(totalPrice > user.getBalance()){
+                JOptionPane.showMessageDialog(null, "잔액이 부족합니다.", "결제 오류", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(),user.getEmail(), user.getPw(), user.getBalance()-totalPrice, user.getSignUpDate(), user.getForm());
+            user = updateUser;
+            Singleton.getInstance().setUserDto(user);
+
+            //결제 로딩창
+            JOptionPane.showMessageDialog(null, "결제가 진행중입니다.", "결제", JOptionPane.INFORMATION_MESSAGE);
             //결제가 완료되면 PayCompleteFrame으로 넘어감
+
+            String infoMesseage = "<html><b>결제정보<br>결제가 완료되었습니다.<br><br>결제금액 : " + totalPrice + "원<br>잔액 : " + user.getBalance() + "원</html>";
+
+
             dispose();
-            new PayCompleteFrame();
+            new PayCompleteFrame(infoMesseage);
         }
     }
 
@@ -494,8 +526,8 @@ public class CardPaymentFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify
-    private javax.swing.JLabel AmountOrderPriceLabel;
-    private javax.swing.JLabel AmountOrderPriceTextLabel;
+    private javax.swing.JLabel amountOrderPriceLabel;
+    private javax.swing.JLabel amountOrderPriceTextLabel;
     private javax.swing.JLabel amountPriceLabel;
     private javax.swing.JPanel amountPricePanel;
     private javax.swing.JButton cancelButton;

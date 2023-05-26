@@ -1,5 +1,14 @@
 package cse.foodtruck.order.system.dto.pay;
 
+
+import lombok.*;
+
+@ToString
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentInfoDto {
     public String cardNumber; //16자리
     public String cardPw; //2자리

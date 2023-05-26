@@ -4,7 +4,12 @@
  */
 package cse.foodtruck.order.system.frame.pay;
 
+import cse.foodtruck.order.system.controller.UserController;
+import cse.foodtruck.order.system.dto.user.UserDto;
+import cse.foodtruck.order.system.frame.UserMainFrame;
 import cse.foodtruck.order.system.frame.OrderFrame;
+import cse.foodtruck.order.system.pattern.singleton.Singleton;
+import cse.foodtruck.order.system.repository.user.UserRepository;
 
 import javax.swing.*;
 
@@ -14,6 +19,8 @@ import javax.swing.*;
  */
 public class CashPaymentFrame extends javax.swing.JFrame {
 
+    UserDto user = Singleton.getInstance().getUserDto();
+    UserController userController = UserController.getInstance();
     private int totalPrice;
     public CashPaymentFrame(int totalPrice) {
         this.totalPrice = totalPrice;
@@ -38,7 +45,6 @@ public class CashPaymentFrame extends javax.swing.JFrame {
         receiptTypeComboBox = new javax.swing.JComboBox<>();
         receiptTypeLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         titleLabel.setBackground(new java.awt.Color(204, 255, 153));
         titleLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 24)); // NOI18N
@@ -125,7 +131,7 @@ public class CashPaymentFrame extends javax.swing.JFrame {
         });
 
         receiptTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "소득공제용", "지출증빙용" }));
-
+        receiptTypeComboBox.setEnabled(false);
         receiptTypeLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         receiptTypeLabel.setText("영수증 등록 구분");
 
@@ -194,26 +200,38 @@ public class CashPaymentFrame extends javax.swing.JFrame {
         //영수증 번호에 입력값이 없을때 결제 불가능하다는 알림창
         if(receiptNumberField.getText().length() == 0){
             JOptionPane.showMessageDialog(null, "영수증 번호를 입력해주세요.", "결제 불가", JOptionPane.ERROR_MESSAGE);
+            receiptNumberField.requestFocus(); //필드에 입력하도록 포커스 맞춤
             return;
         }
 
         //영수증 번호란에 숫자이외의 값이 입력되었을 때
         if(receiptNumberField.getText().matches("^[0-9]*$") == false){
-            JOptionPane.showMessageDialog(null, "영수증번호란에는 숫자만 입력해주세요.", "카드번호 오류", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "영수증번호란에는 숫자만 입력해주세요.", "영수증 등록번호 오류", JOptionPane.ERROR_MESSAGE);
+            receiptNumberField.setText(""); //빈칸으로 초기화
             return;
         }
 
         //영수증 처리 구분, 영수증 번호를 확인하는 알림창. 결제, 닫기 버튼 선택 가능
-        int result = JOptionPane.showConfirmDialog(null, "영수증 처리 구분 : " + receiptType + "\n영수증 번호 : " + receiptNumber + "\n\n결제하시겠습니까?", "결제 확인", JOptionPane.YES_NO_OPTION);
-        if(result == JOptionPane.YES_OPTION){
+        String infoMessage = "<html><b>결제정보<br>영수증 처리 구분 : " + receiptType + "<br>영수증 번호 : " + receiptNumber + "<br><br>결제금액 : " + totalPrice +" 원<br>잔액 : "  + user.getBalance() + "원</html>";
 
-            //결제 완료 알림창
-            JOptionPane.showMessageDialog(null, "결제가 완료되었습니다.", "결제 완료", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-            new PayCompleteFrame();
-        } else{
-            return;
-        }
+        int result = JOptionPane.showConfirmDialog(null, infoMessage, "결제 확인", JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION){
+            //잔액보다 결제금액이 많을 때 결제 불가능하다는 알림창
+            if(user.getBalance() < totalPrice){
+                JOptionPane.showMessageDialog(null, "잔액이 부족합니다.", "결제 불가", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            else{
+                //결제 로딩 알림창
+                JOptionPane.showMessageDialog(null, "결제가 진행중입니다.", "결제 진행중", JOptionPane.INFORMATION_MESSAGE);
+                //결제 완료 후 잔액에서 결제금액만큼 차감
+                UserDto updateUser = userController.updateUserInfo(user.getId(), getName(), user.getEmail(), user.getPw(), user.getBalance()-totalPrice, user.getSignUpDate(), user.getForm());
+                user = updateUser;
+                Singleton.getInstance().setUserDto(user);
+                dispose();
+                new PayCompleteFrame(infoMessage);
+            }
+        } else return;
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {

@@ -6,7 +6,10 @@ package cse.foodtruck.order.system.frame.seller;
 
 import cse.foodtruck.order.system.dto.user.UserDto;
 import cse.foodtruck.order.system.frame.auth.LoginFrame;
+import cse.foodtruck.order.system.frame.auth.MyPageFrame;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
+
+import javax.swing.*;
 
 /**
  *
@@ -95,6 +98,8 @@ public class SellerMainFrame extends javax.swing.JFrame {
 
     private void myPageButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        dispose();
+        new MyPageFrame();
     }
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +112,7 @@ public class SellerMainFrame extends javax.swing.JFrame {
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt){
         dispose();
         new LoginFrame();
+        JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.");
     }
 
 

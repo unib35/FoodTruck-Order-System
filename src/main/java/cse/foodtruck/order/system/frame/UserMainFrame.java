@@ -24,6 +24,9 @@ public class UserMainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
+        System.out.println(Singleton.getInstance().getUserDto());
+        System.out.println("mainFrame user : " + user);
+
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         title = new javax.swing.JLabel();
@@ -37,6 +40,7 @@ public class UserMainFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        System.out.println(user);
 
         title.setBackground(new java.awt.Color(204, 255, 153));
         title.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 24)); // NOI18N
@@ -117,7 +121,6 @@ public class UserMainFrame extends javax.swing.JFrame {
 
         pack();
         setVisible(true);
-        System.out.println(this.user);
     }// </editor-fold>
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,8 +131,10 @@ public class UserMainFrame extends javax.swing.JFrame {
 
     private void myPageButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
         dispose();
         new MyPageFrame();
+
     }
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {

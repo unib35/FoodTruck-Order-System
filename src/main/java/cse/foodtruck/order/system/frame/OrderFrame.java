@@ -8,6 +8,7 @@ import cse.foodtruck.order.system.frame.pay.PayFrame;
 import cse.foodtruck.order.system.frame.seller.SellerMenuUploadFrame;
 import cse.foodtruck.order.system.pattern.bridge.PaymentMethod;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,6 +27,7 @@ import static javax.swing.SwingConstants.CENTER;
  *
  * @author lee
  */
+@Slf4j
 public class OrderFrame extends javax.swing.JFrame {
 
 
@@ -49,7 +51,9 @@ public class OrderFrame extends javax.swing.JFrame {
 
     public void setMenuImagePreviewLabel(String path) {
         try {
+            log.info(path);
             BufferedImage bi = ImageIO.read(new File(path));
+            log.info("after" + path);
             ImageIcon icon = new ImageIcon(bi);
             Image image = icon.getImage();
             Image resizedImage = image.getScaledInstance(150, 150 , Image.SCALE_SMOOTH);
@@ -151,7 +155,7 @@ public class OrderFrame extends javax.swing.JFrame {
 
         beverageMenuComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                foodMenuComboBoxActionPerformed(evt);
+                beverageMenuComboBoxActionPerformed(evt);
             }
         });
 
@@ -409,13 +413,16 @@ public class OrderFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         String selected = (String) beverageMenuComboBox.getSelectedItem();
         MenuDto menu = menuController.getMenu(selected);
-        setMenuImagePreviewLabel(menu.getImage());
+        if(menu == null){
+            JOptionPane.showMessageDialog(null, "다시 선택해주세요.");
+            return;
+        }
+        else {
+            log.info("path :     " +  menu.getImage());
+            setMenuImagePreviewLabel(menu.getImage().toString());
+        }
     }
 
-
-    public static void main(String[] args) {
-        new OrderFrame().setVisible(true);
-    }
     public static void setJFrameStyle(JFrame frame) {
         //TODO 부모 프레임 크기 설정 (가로, 세로) 및 배경색 지정
         frame.setBackground(Color.BLACK);

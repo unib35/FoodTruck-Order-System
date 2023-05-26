@@ -17,7 +17,7 @@ public class AdminManagementFrame extends javax.swing.JFrame {
 
     private UserController userController = UserController.getInstance();
     ArrayList<UserDto> userList;
-    private String columnNames[] = {"id", "pw", "email", "signupdate", "form"};
+    private String columnNames[] = {"id", "name", "email", "signupdate", "form"};
     private Object rowData[][];
 
 
@@ -221,6 +221,8 @@ public class AdminManagementFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "관리자는 삭제할 수 없습니다.");
                     return;
                 }
+
+                //회원 삭제 여부 알림창
 
 
                 if(userController.deleteUser(selectRowId)){

@@ -59,5 +59,10 @@ public class User {
                 .form(dto.getForm())
                 .build();
     }
-
+    public void patch(User entity){
+        if(entity.name != null) this.name = entity.name;
+        if(entity.email != null) this.email = entity.email;
+        if(entity.pw != null) this.pw = entity.pw;
+        if(entity.balance != 0) this.balance = entity.balance;
+    }
 }

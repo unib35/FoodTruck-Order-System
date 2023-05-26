@@ -2,14 +2,19 @@ package cse.foodtruck.order.system.frame.seller;
 
 import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
  *
  * @author lee
  */
+@Slf4j
 public class SellerManagementFrame extends javax.swing.JFrame {
 
     MenuController menuController = MenuController.getInstance();
@@ -49,7 +54,6 @@ public class SellerManagementFrame extends javax.swing.JFrame {
         menuCategoryComboBox = new javax.swing.JComboBox<>();
         menuFindButton = new javax.swing.JButton();
 
-        System.out.println(menuList);
 
         showMenuList(menuList);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -105,7 +109,7 @@ public class SellerManagementFrame extends javax.swing.JFrame {
         menuCategoryLabel.setText("카테고리");
 
         menuCategoryComboBox.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 13)); // NOI18N
-        menuCategoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "전체", "음식", "음료", "간식" }));
+        menuCategoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "전체", "음식", "음료" }));
         menuCategoryComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuCategoryComboBoxActionPerformed(evt);
@@ -188,11 +192,31 @@ public class SellerManagementFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "삭제할 메뉴를 선택해주세요.");
             return;
         }
-        String menuId = menuListTable.getValueAt(selectedRow, 0).toString();
-        menuController.deleteMenu(menuId);
-        JOptionPane.showMessageDialog(null, "메뉴가 삭제되었습니다.");
-        //삭제 후 테이블 갱신
-        showMenuList(menuController.getMenuList());
+
+        int result = JOptionPane.showConfirmDialog(null, "메뉴를 삭제하시겠습니까?", "메뉴 삭제", JOptionPane.YES_NO_OPTION);
+
+        if(result == JOptionPane.YES_OPTION){
+            String menuId = menuListTable.getValueAt(selectedRow, 0).toString();
+            MenuDto target = menuController.getMenu(menuId);
+
+            //해당 메뉴 이미지 삭제
+            String menuImage = target.getImage();
+            try {
+                Files.deleteIfExists(Paths.get(menuImage));
+                log.info("메뉴 이미지 삭제 성공");
+            } catch (IOException e) {
+                log.info("메뉴 이미지 삭제 실패");
+                e.printStackTrace();
+            }
+            menuController.deleteMenu(menuId);
+            JOptionPane.showMessageDialog(null, "메뉴가 삭제되었습니다.");
+
+
+            //삭제 후 테이블 갱신
+            showMenuList(menuController.getMenuList());
+        } else{
+            return;
+        }
 
     }
 
@@ -200,7 +224,6 @@ public class SellerManagementFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
         new SellerMainFrame();
-        JOptionPane.showMessageDialog(null,"로그아웃이 완료되었습니다.");
     }
 
     private void menuCategoryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,7 +234,11 @@ public class SellerManagementFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedCategory = menuCategoryComboBox.getSelectedIndex();
         String selectedCategoryName = menuCategoryComboBox.getSelectedItem().toString();
-        if(selectedCategoryName.equals("전체")){
+        if(menuController.getMenuList().isEmpty()){
+            JOptionPane.showMessageDialog(null, "메뉴가 존재하지 않습니다.");
+            return;
+        }
+        else if(selectedCategoryName.equals("전체")){
             showMenuList(menuController.getMenuList());
             return;
         } else{

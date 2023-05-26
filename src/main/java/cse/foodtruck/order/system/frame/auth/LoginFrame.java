@@ -42,7 +42,7 @@ public class LoginFrame extends javax.swing.JFrame {
         loginPanel = new javax.swing.JPanel();
         idField = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
-        pwField = new javax.swing.JTextField();
+        pwField = new javax.swing.JPasswordField();
         findIdButton = new javax.swing.JButton();
         findPwButton = new javax.swing.JButton();
         signUpButton = new javax.swing.JLabel();
@@ -68,8 +68,8 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
-        pwField.setText("비밀번호");
-        pwField.setToolTipText("비밀번호");
+        pwField.setText("");
+        pwField.setToolTipText("");
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
@@ -229,7 +229,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton loginButton;
     private javax.swing.JPanel loginPanel;
-    private javax.swing.JTextField pwField;
+    private javax.swing.JPasswordField pwField;
     private javax.swing.JLabel signUpButton;
     private javax.swing.JLabel title;
     // End of variables declaration

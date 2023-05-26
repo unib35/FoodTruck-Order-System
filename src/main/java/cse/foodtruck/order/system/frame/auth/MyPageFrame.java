@@ -263,7 +263,6 @@ public class MyPageFrame extends javax.swing.JFrame {
 
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        String result = JOptionPane.showInputDialog("변경할 아이디를 입력하세요.");
 
     }
 
@@ -318,8 +317,9 @@ public class MyPageFrame extends javax.swing.JFrame {
             UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), result, user.getPw(), user.getBalance(), user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "이메일이 변경되었습니다.");
-                Singleton.getInstance().setUserDto(updateUser);
+                user = updateUser;
                 emailField.setText(user.getEmail());
+                Singleton.getInstance().setUserDto(user);
             } else {
                 JOptionPane.showMessageDialog(null, "이메일 변경에 실패하였습니다.");
             }
@@ -336,10 +336,12 @@ public class MyPageFrame extends javax.swing.JFrame {
             UserDto updateUser = userController.updateUserInfo(user.getId(), result, user.getEmail(), user.getPw(), user.getBalance(), user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "이름이 변경되었습니다.");
-                Singleton.getInstance().setUserDto(updateUser);
-                this.user = Singleton.getInstance().getUserDto();
-
-
+                user = updateUser;
+                System.out.println("updateUser :" + updateUser.getName());
+                System.out.println("user :" + user.getName());
+                nameField.setText(user.getName());
+                titleLabel2.setText(user.getName() + "님");
+                Singleton.getInstance().setUserDto(user);
             } else {
                 JOptionPane.showMessageDialog(null, "이름 변경에 실패하였습니다.");
             }
@@ -373,10 +375,11 @@ public class MyPageFrame extends javax.swing.JFrame {
                 UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), user.getEmail(), user.getPw(), user.getBalance() - withdraw, user.getSignUpDate(), user.getForm());
                 if(updateUser != null) {
                     JOptionPane.showMessageDialog(null, "출금이 완료되었습니다.");
-                    Singleton.getInstance().setUserDto(updateUser);
+                    user = updateUser;
                     balanceField.setText(String.valueOf(updateUser.getBalance() + "원"));
+                    Singleton.getInstance().setUserDto(user);
                 } else {
-                    JOptionPane.showMessageDialog(null, "출금에 실패하였습니다.");
+                    JOptionPane.showMessageDialog(null, "출금 실패하였습니다.");
                 }
             }
         }
@@ -405,8 +408,11 @@ public class MyPageFrame extends javax.swing.JFrame {
             UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), user.getEmail(), user.getPw(), user.getBalance() + deposit, user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "입금이 완료되었습니다.");
-                Singleton.getInstance().setUserDto(updateUser);
-                balanceField.setText(String.valueOf(updateUser.getBalance()) + "원");
+                System.out.println("입금전 : " + user.getBalance());
+                user = updateUser;
+                balanceField.setText(String.valueOf(user.getBalance()) + "원");
+                System.out.println("입금후 : " + user.getBalance());
+                Singleton.getInstance().setUserDto(user);
             } else {
                 JOptionPane.showMessageDialog(null, "입금에 실패하였습니다.");
             }
@@ -423,41 +429,6 @@ public class MyPageFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
         new UserMainFrame();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MyPageFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MyPageFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MyPageFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MyPageFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MyPageFrame().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify

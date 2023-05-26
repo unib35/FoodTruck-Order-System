@@ -96,6 +96,7 @@ public class UserService {
 
     public UserDto updateUserInfo(UserUpdateDto dto){
         User user = User.toEntity(dto);
+
         UserDto result = UserDto.createDto(userRepository.update(user));
         if(result == null) return null;
         else return result;
