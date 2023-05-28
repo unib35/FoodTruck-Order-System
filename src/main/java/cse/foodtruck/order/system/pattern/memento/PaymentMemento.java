@@ -1,16 +1,15 @@
 package cse.foodtruck.order.system.pattern.memento;
 
-import cse.foodtruck.order.system.dto.pay.PaymentInfoDto;
-import cse.foodtruck.order.system.pattern.bridge.PaymentMethod;
+import cse.foodtruck.order.system.dto.pay.CardPaymentInfoDto;
 
 public class PaymentMemento {
-    private final PaymentInfoDto paymentInfoDto;
+    private final CardPaymentInfoDto cardPaymentInfoDto;
 
-    public PaymentMemento(PaymentInfoDto dto) {
-        this.paymentInfoDto = dto;
+    public PaymentMemento(CardPaymentInfoDto dto) {
+        this.cardPaymentInfoDto = dto;
     }
 
-    public PaymentInfoDto getPaymentInfoDto() {
-        return this.paymentInfoDto;
+    public CardPaymentInfoDto getPaymentInfoDto() {
+        return this.cardPaymentInfoDto;
     }
 }

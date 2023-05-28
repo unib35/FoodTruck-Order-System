@@ -6,10 +6,8 @@ package cse.foodtruck.order.system.frame.pay;
 
 import cse.foodtruck.order.system.controller.UserController;
 import cse.foodtruck.order.system.dto.user.UserDto;
-import cse.foodtruck.order.system.frame.UserMainFrame;
-import cse.foodtruck.order.system.frame.OrderFrame;
+import cse.foodtruck.order.system.frame.user.OrderFrame;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
-import cse.foodtruck.order.system.repository.user.UserRepository;
 
 import javax.swing.*;
 
@@ -213,7 +211,7 @@ public class CashPaymentFrame extends javax.swing.JFrame {
         }
 
         //영수증 처리 구분, 영수증 번호를 확인하는 알림창. 결제, 닫기 버튼 선택 가능
-        String infoMessage = "<html><b>결제정보<br>영수증 처리 구분 : " + receiptType + "<br>영수증 번호 : " + receiptNumber + "<br><br>결제금액 : " + (user.getBalance() - totalPrice) +" 원</html>";
+        String infoMessage = "<html><b>결제정보<br>영수증 처리 구분 : " + receiptType + "<br>영수증 번호 : " + receiptNumber + "<br><br>결제금액 : " +  totalPrice +" 원</html>";
 
         int result = JOptionPane.showConfirmDialog(null, infoMessage, "결제 확인", JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){

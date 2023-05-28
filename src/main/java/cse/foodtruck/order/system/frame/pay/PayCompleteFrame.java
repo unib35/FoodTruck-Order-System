@@ -4,7 +4,7 @@
  */
 package cse.foodtruck.order.system.frame.pay;
 
-import cse.foodtruck.order.system.frame.UserMainFrame;
+import cse.foodtruck.order.system.frame.user.UserMainFrame;
 
 import javax.swing.*;
 

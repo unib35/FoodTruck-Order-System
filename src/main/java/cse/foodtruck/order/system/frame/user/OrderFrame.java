@@ -1,12 +1,11 @@
 
-package cse.foodtruck.order.system.frame;
+package cse.foodtruck.order.system.frame.user;
 
 import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
 import cse.foodtruck.order.system.dto.user.UserDto;
 import cse.foodtruck.order.system.frame.pay.PayFrame;
 import cse.foodtruck.order.system.frame.seller.SellerMenuUploadFrame;
-import cse.foodtruck.order.system.pattern.bridge.PaymentMethod;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 import lombok.extern.slf4j.Slf4j;
 

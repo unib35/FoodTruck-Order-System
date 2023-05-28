@@ -6,7 +6,7 @@ package cse.foodtruck.order.system.frame.pay;
 
 import cse.foodtruck.order.system.controller.UserController;
 import cse.foodtruck.order.system.dto.user.UserDto;
-import cse.foodtruck.order.system.frame.UserMainFrame;
+import cse.foodtruck.order.system.frame.user.UserMainFrame;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 /**

@@ -1,23 +1,21 @@
 package cse.foodtruck.order.system.pattern.memento;
 
-import cse.foodtruck.order.system.dto.pay.PaymentInfoDto;
-import lombok.Getter;
-import lombok.Setter;
+import cse.foodtruck.order.system.dto.pay.CardPaymentInfoDto;
 
 
 public class PaymentOriginator {
-    private PaymentInfoDto paymentInfoDto;
+    private CardPaymentInfoDto cardPaymentInfoDto;
 
-    public void setPaymentInfoDto(PaymentInfoDto dto){
-        this.paymentInfoDto = dto;
+    public void setPaymentInfoDto(CardPaymentInfoDto dto){
+        this.cardPaymentInfoDto = dto;
     }
 
     public PaymentMemento saveToMemento(){
-        return new PaymentMemento(paymentInfoDto);
+        return new PaymentMemento(cardPaymentInfoDto);
     }
 
     public void restorePaymentInfo(PaymentMemento memento){
-        this.paymentInfoDto = memento.getPaymentInfoDto();
+        this.cardPaymentInfoDto = memento.getPaymentInfoDto();
     }
 
 }

@@ -2,7 +2,7 @@ package cse.foodtruck.order.system.frame.pay;
 
 import cse.foodtruck.order.system.controller.MenuController;
 import cse.foodtruck.order.system.dto.menu.MenuDto;
-import cse.foodtruck.order.system.frame.OrderFrame;
+import cse.foodtruck.order.system.frame.user.OrderFrame;
 import cse.foodtruck.order.system.pattern.bridge.CardPayment;
 import cse.foodtruck.order.system.pattern.bridge.CashPayment;
 import cse.foodtruck.order.system.pattern.bridge.PaymentMethod;

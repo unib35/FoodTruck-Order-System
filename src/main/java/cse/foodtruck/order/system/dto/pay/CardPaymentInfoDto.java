@@ -9,7 +9,10 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentInfoDto {
+public class CardPaymentInfoDto {
+    public String userId;
+
+    public int totalPrice;
     public String cardNumber; //16자리
     public String cardPw; //2자리
     public String cvc; //3자리

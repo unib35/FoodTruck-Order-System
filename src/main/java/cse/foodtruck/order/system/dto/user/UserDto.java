@@ -3,7 +3,6 @@ package cse.foodtruck.order.system.dto.user;
 import cse.foodtruck.order.system.entity.user.User;
 import lombok.*;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -89,6 +88,7 @@ public class UserDto {
         this.form = builder.form;
         this.balance = builder.balance;
     }
+
 
     public static UserDto createDto(User entity) {
         return new UserBuilder()

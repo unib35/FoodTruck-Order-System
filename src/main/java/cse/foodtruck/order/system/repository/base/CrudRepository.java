@@ -24,11 +24,6 @@ public class CrudRepository<T, PK> extends Repository{
         this.tableName = this.tableName.toUpperCase();
         this.pkFieldName = ec.getDeclaredFields()[0].getName();
         this.fieldList = ec.getDeclaredFields();
-        System.out.println("tableName : " + tableName);
-        System.out.println("pkFieldName : " + pkFieldName);
-        System.out.println("fieldList : " + fieldList);
-        System.out.println(ec.getDeclaredFields().getClass().getName());
-
 
         // AccessibleObject.setAccessible() 메소드
         // -> 이 객체의 accessible 플래그를 지정된 값으로 설정

@@ -5,11 +5,9 @@
 package cse.foodtruck.order.system.frame.pay;
 
 import cse.foodtruck.order.system.controller.UserController;
-import cse.foodtruck.order.system.dto.pay.PaymentInfoDto;
 import cse.foodtruck.order.system.dto.user.UserDto;
-import cse.foodtruck.order.system.frame.OrderFrame;
+import cse.foodtruck.order.system.frame.user.OrderFrame;
 import cse.foodtruck.order.system.pattern.memento.PaymentCaretaker;
-import cse.foodtruck.order.system.pattern.memento.PaymentMemento;
 import cse.foodtruck.order.system.pattern.memento.PaymentOriginator;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 

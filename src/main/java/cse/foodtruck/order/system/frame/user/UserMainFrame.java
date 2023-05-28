@@ -1,31 +1,30 @@
 
-package cse.foodtruck.order.system.frame;
+package cse.foodtruck.order.system.frame.user;
 
 import cse.foodtruck.order.system.dto.user.UserDto;
 import cse.foodtruck.order.system.frame.auth.LoginFrame;
 import cse.foodtruck.order.system.frame.auth.MyPageFrame;
+import cse.foodtruck.order.system.pattern.observer.DataCollection;
+import cse.foodtruck.order.system.pattern.observer.Observer;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
+
+import javax.xml.crypto.Data;
 
 /**
  *
  * @author lee
  */
-public class UserMainFrame extends javax.swing.JFrame {
+public class UserMainFrame extends javax.swing.JFrame implements Observer {
 
-    /**
-     * Creates new form MainFrame
-     */
-    private UserDto user = Singleton.getInstance().getUserDto();
+    private UserDto user = DataCollection.getInstance().getUserData().getUserDto();
     public UserMainFrame() {
+        DataCollection.getInstance().getUserData().registerObserver(this);
         initComponents();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
-        System.out.println(Singleton.getInstance().getUserDto());
-        System.out.println("mainFrame user : " + user);
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
@@ -40,7 +39,6 @@ public class UserMainFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        System.out.println(user);
 
         title.setBackground(new java.awt.Color(204, 255, 153));
         title.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 24)); // NOI18N
@@ -132,7 +130,6 @@ public class UserMainFrame extends javax.swing.JFrame {
     private void myPageButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
 
-        dispose();
         new MyPageFrame();
 
     }
@@ -153,5 +150,14 @@ public class UserMainFrame extends javax.swing.JFrame {
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton myPageButton;
     private javax.swing.JLabel title;
+
+    @Override
+    public void update() {
+        this.user = DataCollection.getInstance().getUserData().getUserDto();
+        if(user != null){
+            UserNameLabel.setText(user.getName() + "님 반가워요!");
+            balanceLabel.setText(user.getBalance() + "원");
+        }
+    }
     // End of variables declaration
 }

@@ -5,8 +5,11 @@
 package cse.foodtruck.order.system.frame.auth;
 
 import cse.foodtruck.order.system.controller.UserController;
+import cse.foodtruck.order.system.dto.user.UserData;
 import cse.foodtruck.order.system.dto.user.UserDto;
-import cse.foodtruck.order.system.frame.UserMainFrame;
+import cse.foodtruck.order.system.frame.user.UserMainFrame;
+import cse.foodtruck.order.system.pattern.observer.DataCollection;
+import cse.foodtruck.order.system.pattern.observer.Observer;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 import cse.foodtruck.order.system.pattern.state.NotifyStateIcon;
 
@@ -22,9 +25,9 @@ import java.util.regex.Pattern;
  *
  * @author lee
  */
-public class MyPageFrame extends javax.swing.JFrame {
+public class MyPageFrame extends javax.swing.JFrame implements Observer {
 
-    private UserDto user = Singleton.getInstance().getUserDto();
+    private UserDto user = DataCollection.getInstance().getUserData().getUserDto();
     UserController userController = UserController.getInstance();
     NotifyStateIcon notifyStateIcon = new NotifyStateIcon();
     public static final String NOTIFY_AGREE_ICON = "src/main/java/cse/foodtruck/order/system/image/notification.png";
@@ -34,6 +37,8 @@ public class MyPageFrame extends javax.swing.JFrame {
 
 
     public MyPageFrame() {
+        DataCollection.getInstance().getUserData().registerObserver(this);
+        System.out.println("mypage frame" + "옵저버에 등록");
         initComponents();
     }
 
@@ -323,6 +328,11 @@ public class MyPageFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         String result = JOptionPane.showInputDialog("변경할 이메일을 입력하세요.");
 
+        if(result == null) {
+            JOptionPane.showMessageDialog(null, "변경할 이메일을 입력해주세요.");
+            return;
+        }
+
         if (!result.contains("@") || !result.contains(".")) {
             JOptionPane.showMessageDialog(null, "올바른 이메일 형식을 입력해주세요");
             return;
@@ -334,18 +344,13 @@ public class MyPageFrame extends javax.swing.JFrame {
             return;
         }
 
-        if(result == null) {
-            JOptionPane.showMessageDialog(null, "변경할 이메일을 입력해주세요.");
-            return;
-        }
+
 
         else{
             UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), result, user.getPw(), user.getBalance(), user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "이메일이 변경되었습니다.");
-                user = updateUser;
-                emailField.setText(user.getEmail());
-                Singleton.getInstance().setUserDto(user);
+                DataCollection.getInstance().getUserData().setStatus(updateUser);
             } else {
                 JOptionPane.showMessageDialog(null, "이메일 변경에 실패하였습니다.");
             }
@@ -363,12 +368,7 @@ public class MyPageFrame extends javax.swing.JFrame {
             UserDto updateUser = userController.updateUserInfo(user.getId(), result, user.getEmail(), user.getPw(), user.getBalance(), user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "이름이 변경되었습니다.");
-                user = updateUser;
-                System.out.println("updateUser :" + updateUser.getName());
-                System.out.println("user :" + user.getName());
-                nameField.setText(user.getName());
-                titleLabel2.setText(user.getName() + "님");
-                Singleton.getInstance().setUserDto(user);
+                DataCollection.getInstance().getUserData().setStatus(updateUser);
             } else {
                 JOptionPane.showMessageDialog(null, "이름 변경에 실패하였습니다.");
             }
@@ -403,9 +403,7 @@ public class MyPageFrame extends javax.swing.JFrame {
                 UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), user.getEmail(), user.getPw(), user.getBalance() - withdraw, user.getSignUpDate(), user.getForm());
                 if(updateUser != null) {
                     JOptionPane.showMessageDialog(null, "출금이 완료되었습니다.");
-                    user = updateUser;
-                    balanceField.setText(String.valueOf(updateUser.getBalance() + "원"));
-                    Singleton.getInstance().setUserDto(user);
+                    DataCollection.getInstance().getUserData().setStatus(updateUser);
                 } else {
                     JOptionPane.showMessageDialog(null, "출금 실패하였습니다.");
                 }
@@ -437,11 +435,7 @@ public class MyPageFrame extends javax.swing.JFrame {
             UserDto updateUser = userController.updateUserInfo(user.getId(), user.getName(), user.getEmail(), user.getPw(), user.getBalance() + deposit, user.getSignUpDate(), user.getForm());
             if(updateUser != null) {
                 JOptionPane.showMessageDialog(null, "입금이 완료되었습니다.");
-                System.out.println("입금전 : " + user.getBalance());
-                user = updateUser;
-                balanceField.setText(String.valueOf(user.getBalance()) + "원");
-                System.out.println("입금후 : " + user.getBalance());
-                Singleton.getInstance().setUserDto(user);
+                DataCollection.getInstance().getUserData().setStatus(updateUser);
             } else {
                 JOptionPane.showMessageDialog(null, "입금에 실패하였습니다.");
             }
@@ -458,8 +452,6 @@ public class MyPageFrame extends javax.swing.JFrame {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         dispose();
-        new UserMainFrame();
-
     }
 
     private void notifyDisagreeButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -496,5 +488,17 @@ public class MyPageFrame extends javax.swing.JFrame {
     private javax.swing.JLabel titleLabel2;
     private javax.swing.JLabel titleLabel3;
     private javax.swing.JButton withDrawButton;
+
+    @Override
+    public void update() {
+        this.user = DataCollection.getInstance().getUserData().getUserDto();
+        if(user != null){
+            emailField.setText(user.getEmail());
+            idField.setText(user.getId());
+            nameField.setText(user.getName());
+            balanceField.setText(String.valueOf(user.getBalance()) + "원");
+            titleLabel2.setText(user.getName() + "님");
+        }
+    }
     // End of variables declaration
 }
