@@ -7,8 +7,6 @@ package cse.foodtruck.order.system.frame.pay;
 import cse.foodtruck.order.system.controller.UserController;
 import cse.foodtruck.order.system.dto.user.UserDto;
 import cse.foodtruck.order.system.frame.user.OrderFrame;
-import cse.foodtruck.order.system.pattern.memento.PaymentCaretaker;
-import cse.foodtruck.order.system.pattern.memento.PaymentOriginator;
 import cse.foodtruck.order.system.pattern.singleton.Singleton;
 
 import javax.swing.*;
@@ -23,9 +21,6 @@ public class CardPaymentFrame extends javax.swing.JFrame {
 
     UserDto user = Singleton.getInstance().getUserDto();
     UserController userController = UserController.userController;
-
-    PaymentOriginator paymentOriginator = new PaymentOriginator();
-    PaymentCaretaker paymentCaretaker = new PaymentCaretaker();
 
     private int totalPrice;
     public CardPaymentFrame(int totalPrice) {
@@ -66,7 +61,7 @@ public class CardPaymentFrame extends javax.swing.JFrame {
         cvcLabel = new javax.swing.JLabel();
         cardPwField = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         titleLabel.setBackground(new java.awt.Color(204, 255, 153));
         titleLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 24)); // NOI18N

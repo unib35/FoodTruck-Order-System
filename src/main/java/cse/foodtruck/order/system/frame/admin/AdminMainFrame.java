@@ -18,7 +18,7 @@ public class AdminMainFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
+        setLocationRelativeTo(null);
         titleLabel = new javax.swing.JLabel();
         AdminNameLabel = new javax.swing.JLabel();
         ManagementButton = new javax.swing.JButton();

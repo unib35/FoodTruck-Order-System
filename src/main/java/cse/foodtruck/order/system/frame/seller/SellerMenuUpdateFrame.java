@@ -34,6 +34,7 @@ public class SellerMenuUpdateFrame extends javax.swing.JFrame {
         updateButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
 
+        setLocationRelativeTo(null);
 
         titleLabel.setBackground(new java.awt.Color(204, 255, 153));
         titleLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 24)); // NOI18N

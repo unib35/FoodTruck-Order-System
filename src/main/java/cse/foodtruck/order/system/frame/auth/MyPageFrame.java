@@ -70,6 +70,7 @@ public class MyPageFrame extends javax.swing.JFrame implements Observer {
         NotifyStausLabel = new javax.swing.JLabel();
 
 
+        setLocationRelativeTo(null);
         jButton1.setText("jButton1");
 
         jLabel1.setText("jLabel1");

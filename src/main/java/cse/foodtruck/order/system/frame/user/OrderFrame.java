@@ -120,7 +120,7 @@ public class OrderFrame extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(cartListTable);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
 
         setJFrameStyle(this);
 

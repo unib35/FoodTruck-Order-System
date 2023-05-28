@@ -57,6 +57,9 @@ public class SignUpFrame extends javax.swing.JFrame {
         emailLabel.setText("이메일");
 
         idField.setToolTipText("아이디");
+
+        setLocationRelativeTo(null);
+
         idField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idFieldActionPerformed(evt);
@@ -77,9 +80,9 @@ public class SignUpFrame extends javax.swing.JFrame {
             }
         });
 
-        pwField.setText("jPasswordField1");
+        pwField.setText("");
 
-        checkPwField.setText("jPasswordField1");
+        checkPwField.setText("");
 
         FormLabel.setText("회원 유형");
 

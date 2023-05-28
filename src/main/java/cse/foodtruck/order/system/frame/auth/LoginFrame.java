@@ -48,6 +48,8 @@ public class LoginFrame extends javax.swing.JFrame implements Observer {
         signUpButton = new javax.swing.JLabel();
         title = new javax.swing.JLabel();
 
+        setLocationRelativeTo(null);
+
         idField.requestFocus();
         jScrollPane1.setViewportView(jEditorPane1);
 

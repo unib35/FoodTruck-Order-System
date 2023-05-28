@@ -37,7 +37,7 @@ public class PayCompleteFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         cancelPayButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
 
 

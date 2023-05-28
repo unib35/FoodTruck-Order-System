@@ -38,7 +38,7 @@ public class UserMainFrame extends javax.swing.JFrame implements Observer {
 
         jScrollPane1.setViewportView(jTextPane1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         title.setBackground(new java.awt.Color(204, 255, 153));
         title.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 24)); // NOI18N

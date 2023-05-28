@@ -71,6 +71,7 @@ public class AdminManagementFrame extends javax.swing.JFrame {
         searchTypeComboBox = new javax.swing.JComboBox<>();
         searchTypeLabel = new javax.swing.JLabel();
         allUserFindButton = new javax.swing.JButton();
+        setLocationRelativeTo(null);
 
 
         setPreferredSize(new java.awt.Dimension(600, 400));
